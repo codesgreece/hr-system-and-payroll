@@ -28,12 +28,11 @@ npm run db:seed
 npm run dev
 ```
 
-## Demo accounts
+## Login
 
-| Role  | Email           | Password   |
-|-------|-----------------|------------|
-| Owner | owner@nexus.gr  | owner123!  |
-| HR    | hr@nexus.gr     | hr123!     |
+| Role  | Email                        | Password         |
+|-------|------------------------------|------------------|
+| Owner | nexusdevstudio@outlook.com   | AdminNexus2026!  |
 
 ## Access model
 
