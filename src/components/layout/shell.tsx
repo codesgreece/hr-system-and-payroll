@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState, useTransition } from "react";
 import { Menu, X, Moon, Sun, Search, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { NavSection } from "@/lib/permissions";
@@ -39,7 +39,14 @@ export function Sidebar({
   userRole: string;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [pendingHref, setPendingHref] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
+
+  useEffect(() => {
+    setPendingHref(null);
+  }, [pathname]);
 
   function isActive(href: string) {
     if (href === "/dashboard") return pathname === "/dashboard";
@@ -47,14 +54,26 @@ export function Sidebar({
     return pathname === href || pathname.startsWith(href + "/");
   }
 
+  function navigate(href: string) {
+    if (href === pathname) {
+      setOpen(false);
+      return;
+    }
+    setPendingHref(href);
+    setOpen(false);
+    startTransition(() => {
+      router.push(href);
+    });
+  }
+
   const nav = (
     <div className="flex h-full flex-col">
       <div className="flex h-14 items-center justify-between px-5">
-        <Link href="/dashboard" className="group" onClick={() => setOpen(false)}>
+        <button type="button" className="group" onClick={() => navigate("/dashboard")}>
           <span className="text-sm font-bold tracking-[0.2em] text-[var(--accent)] transition-opacity group-hover:opacity-80">
             NEXUS
           </span>
-        </Link>
+        </button>
         <button
           className="lg:hidden rounded-md p-1 text-[var(--muted-fg)]"
           onClick={() => setOpen(false)}
@@ -73,22 +92,30 @@ export function Sidebar({
               </p>
             ) : null}
             <ul className="space-y-0.5">
-              {section.items.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      "block rounded-lg px-2.5 py-1.5 text-sm transition-colors duration-150",
-                      isActive(item.href)
-                        ? "bg-[var(--accent-muted)] font-medium text-[var(--accent)]"
-                        : "text-[var(--muted-fg)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              {section.items.map((item) => {
+                const active = isActive(item.href);
+                const loading = pending && pendingHref === item.href;
+                return (
+                  <li key={item.href}>
+                    <button
+                      type="button"
+                      onClick={() => navigate(item.href)}
+                      className={cn(
+                        "flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-sm transition-colors duration-100",
+                        active
+                          ? "bg-[var(--accent-muted)] font-medium text-[var(--accent)]"
+                          : "text-[var(--muted-fg)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]",
+                        loading && "opacity-70"
+                      )}
+                    >
+                      <span>{item.label}</span>
+                      {loading ? (
+                        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--accent)]" />
+                      ) : null}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}
@@ -125,6 +152,9 @@ export function Sidebar({
           <Menu className="h-5 w-5" />
         </button>
         <span className="text-sm font-bold tracking-[0.2em] text-[var(--accent)]">NEXUS</span>
+        {pending ? (
+          <span className="ml-auto h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--accent)]" />
+        ) : null}
       </div>
     </>
   );
@@ -135,6 +165,7 @@ export function TopBar({ showHrReports }: { showHrReports?: boolean }) {
     <div className="hidden h-14 items-center justify-between border-b border-[var(--border)] px-6 lg:flex">
       <Link
         href="/search"
+        prefetch
         className="flex h-9 w-full max-w-md items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--muted)]/40 px-3 text-sm text-[var(--muted-fg)] transition-colors hover:border-[var(--accent)]/40 hover:text-[var(--foreground)]"
       >
         <Search className="h-4 w-4" />
@@ -144,6 +175,7 @@ export function TopBar({ showHrReports }: { showHrReports?: boolean }) {
         {showHrReports ? (
           <Link
             href="/reports"
+            prefetch
             className="rounded-lg px-3 py-1.5 text-sm text-[var(--muted-fg)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
           >
             Reports
