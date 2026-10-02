@@ -71,8 +71,12 @@ export async function getSessionUser(): Promise<SessionUser | null> {
     if (session) {
       await prisma.session.delete({ where: { id: session.id } }).catch(() => {});
     }
-    // Clear stale cookie to prevent redirect loops
-    cookieStore.delete(SESSION_COOKIE);
+    // Best-effort clear — cookies can only be mutated in actions/route handlers
+    try {
+      cookieStore.delete(SESSION_COOKIE);
+    } catch {
+      /* ignore in RSC render */
+    }
     return null;
   }
 
