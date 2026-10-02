@@ -1,9 +1,25 @@
+import Link from "next/link";
+import {
+  Users,
+  UserCheck,
+  Palmtree,
+  UserPlus,
+  FolderKanban,
+  ListTodo,
+  CheckCircle2,
+  TrendingUp,
+  Receipt,
+  Scale,
+  ArrowRight,
+  Plus,
+} from "lucide-react";
 import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/auth";
 import { canAccessFinance } from "@/lib/permissions";
-import { PageHeader, SectionLabel } from "@/components/ui/page";
+import { PageHeader } from "@/components/ui/page";
 import { StatCard, Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge, statusBadgeVariant } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   formatCurrency,
   formatDate,
@@ -14,9 +30,33 @@ import {
   fullName,
   labelize,
 } from "@/lib/utils";
-import Link from "next/link";
 
 export const metadata = { title: "Dashboard" };
+
+function SectionHeader({
+  title,
+  href,
+  linkLabel,
+}: {
+  title: string;
+  href: string;
+  linkLabel: string;
+}) {
+  return (
+    <div className="mb-3 flex items-center justify-between gap-3">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--muted-fg)]">
+        {title}
+      </p>
+      <Link
+        href={href}
+        className="inline-flex items-center gap-1 text-xs font-medium text-[var(--accent)] hover:opacity-80"
+      >
+        {linkLabel}
+        <ArrowRight className="h-3 w-3" />
+      </Link>
+    </div>
+  );
+}
 
 export default async function DashboardPage() {
   const user = await requireUser();
@@ -85,7 +125,10 @@ export default async function DashboardPage() {
       : Promise.resolve([]),
     owner
       ? prisma.revenue.aggregate({
-          where: { date: { gte: monthStart, lte: monthEnd }, paymentStatus: { not: "CANCELLED" } },
+          where: {
+            date: { gte: monthStart, lte: monthEnd },
+            paymentStatus: { not: "CANCELLED" },
+          },
           _sum: { amount: true },
         })
       : Promise.resolve(null),
@@ -100,42 +143,106 @@ export default async function DashboardPage() {
   const revenue = revenueAgg ? toNumber(revenueAgg._sum.amount) : 0;
   const expenses = expenseAgg ? toNumber(expenseAgg._sum.amount) : 0;
   const net = revenue - expenses;
+  const isEmpty =
+    totalEmployees === 0 &&
+    activeProjects === 0 &&
+    openTasks === 0 &&
+    completedTasks === 0 &&
+    (!owner || (revenue === 0 && expenses === 0));
+
+  const firstName = user.name.split(" ")[0];
 
   return (
     <div>
       <PageHeader
         title="Dashboard"
-        description={`Welcome back, ${user.name.split(" ")[0]}.`}
+        description={`Welcome back, ${firstName}.`}
+        actions={
+          <div className="flex flex-wrap gap-2">
+            <Link href="/employees">
+              <Button size="sm" variant="secondary">
+                <Plus className="h-3.5 w-3.5" />
+                Employee
+              </Button>
+            </Link>
+            <Link href="/projects">
+              <Button size="sm" variant="secondary">
+                <Plus className="h-3.5 w-3.5" />
+                Project
+              </Button>
+            </Link>
+            {owner ? (
+              <Link href="/finance/revenue">
+                <Button size="sm">
+                  <Plus className="h-3.5 w-3.5" />
+                  Revenue
+                </Button>
+              </Link>
+            ) : null}
+          </div>
+        }
       />
 
-      <SectionLabel>People</SectionLabel>
-      <div className="mb-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Total Employees" value={totalEmployees} />
-        <StatCard label="Active" value={activeEmployees} />
-        <StatCard label="On Leave" value={onLeave} />
-        <StatCard label="New (30 days)" value={newEmployees} />
-      </div>
+      {isEmpty ? (
+        <Card className="mb-6 border-[var(--accent)]/20 bg-[var(--accent-muted)]/40">
+          <CardContent className="flex flex-col gap-4 !py-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold text-[var(--foreground)]">
+                Start with people & projects
+              </p>
+              <p className="mt-1 text-sm text-[var(--muted-fg)]">
+                Your Control Center is ready. Add the first records to see live
+                overview numbers here.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Link href="/employees">
+                <Button size="sm">Add employee</Button>
+              </Link>
+              <Link href="/projects">
+                <Button size="sm" variant="outline">
+                  Add project
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      ) : null}
 
-      <SectionLabel>Work</SectionLabel>
-      <div className="mb-8 grid gap-3 sm:grid-cols-3">
-        <StatCard label="Active Projects" value={activeProjects} />
-        <StatCard label="Open Tasks" value={openTasks} />
-        <StatCard label="Completed Tasks" value={completedTasks} />
-      </div>
+      <section className="mb-7">
+        <SectionHeader title="People" href="/employees" linkLabel="View employees" />
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <StatCard label="Total Employees" value={totalEmployees} icon={Users} />
+          <StatCard label="Active" value={activeEmployees} icon={UserCheck} />
+          <StatCard label="On Leave" value={onLeave} icon={Palmtree} />
+          <StatCard label="New (30 days)" value={newEmployees} icon={UserPlus} />
+        </div>
+      </section>
+
+      <section className="mb-7">
+        <SectionHeader title="Work" href="/tasks" linkLabel="View tasks" />
+        <div className="grid gap-3 sm:grid-cols-3">
+          <StatCard label="Active Projects" value={activeProjects} icon={FolderKanban} />
+          <StatCard label="Open Tasks" value={openTasks} icon={ListTodo} />
+          <StatCard label="Completed Tasks" value={completedTasks} icon={CheckCircle2} />
+        </div>
+      </section>
 
       {owner ? (
-        <>
-          <SectionLabel>Finance · This Month</SectionLabel>
-          <div className="mb-8 grid gap-3 sm:grid-cols-3">
-            <StatCard label="Revenue" value={formatCurrency(revenue)} />
-            <StatCard label="Expenses" value={formatCurrency(expenses)} />
+        <section className="mb-7">
+          <SectionHeader title="Finance · This Month" href="/finance" linkLabel="Open finance" />
+          <div className="grid gap-3 sm:grid-cols-3">
+            <StatCard label="Revenue" value={formatCurrency(revenue)} icon={TrendingUp} />
+            <StatCard label="Expenses" value={formatCurrency(expenses)} icon={Receipt} />
             <StatCard
               label="Net Result"
               value={formatCurrency(net)}
-              hint={net >= 0 ? "Positive" : "Negative"}
+              icon={Scale}
+              tone={net > 0 ? "positive" : net < 0 ? "negative" : "default"}
+              hint={net > 0 ? "Positive" : net < 0 ? "Negative" : "Break even"}
             />
           </div>
-        </>
+        </section>
       ) : null}
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -150,7 +257,12 @@ export default async function DashboardPage() {
           </CardHeader>
           <CardContent className="space-y-3 !pt-0">
             {recentAudit.length === 0 ? (
-              <p className="py-6 text-center text-sm text-[var(--muted-fg)]">No activity yet</p>
+              <div className="rounded-lg border border-dashed border-[var(--border)] px-4 py-8 text-center">
+                <p className="text-sm font-medium">No activity yet</p>
+                <p className="mt-1 text-xs text-[var(--muted-fg)]">
+                  Actions across Nexus will appear here.
+                </p>
+              </div>
             ) : (
               recentAudit.map((log) => (
                 <div
@@ -164,7 +276,7 @@ export default async function DashboardPage() {
                       <span className="font-medium">{log.entity.toLowerCase()}</span>
                     </p>
                     {log.details ? (
-                      <p className="mt-0.5 text-xs text-[var(--muted-fg)] line-clamp-1">
+                      <p className="mt-0.5 line-clamp-1 text-xs text-[var(--muted-fg)]">
                         {log.details}
                       </p>
                     ) : null}
@@ -222,7 +334,9 @@ export default async function DashboardPage() {
                           <span className="text-[var(--muted-fg)]"> · {t.project.name}</span>
                         ) : null}
                       </span>
-                      <Badge variant={statusBadgeVariant(t.priority)}>{labelize(t.priority)}</Badge>
+                      <Badge variant={statusBadgeVariant(t.priority)}>
+                        {labelize(t.priority)}
+                      </Badge>
                     </li>
                   ))}
                 </ul>

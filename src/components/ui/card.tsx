@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import type { LucideIcon } from "lucide-react";
 
 export function Card({
   children,
@@ -27,7 +28,12 @@ export function CardHeader({
   className?: string;
 }) {
   return (
-    <div className={cn("flex items-center justify-between gap-3 px-5 py-4 border-b border-[var(--border)]", className)}>
+    <div
+      className={cn(
+        "flex items-center justify-between gap-3 border-b border-[var(--border)] px-5 py-3.5",
+        className
+      )}
+    >
       {children}
     </div>
   );
@@ -57,19 +63,41 @@ export function StatCard({
   label,
   value,
   hint,
+  icon: Icon,
+  tone = "default",
 }: {
   label: string;
   value: React.ReactNode;
   hint?: string;
+  icon?: LucideIcon;
+  tone?: "default" | "positive" | "negative" | "accent";
 }) {
   return (
-    <Card className="transition-colors duration-150 hover:border-[var(--accent)]/30">
-      <CardContent className="space-y-2">
-        <p className="text-xs font-medium uppercase tracking-wider text-[var(--muted-fg)]">
-          {label}
-        </p>
-        <p className="text-2xl font-semibold tracking-tight tabular-nums">{value}</p>
-        {hint ? <p className="text-xs text-[var(--muted-fg)]">{hint}</p> : null}
+    <Card className="transition-colors duration-150 hover:border-[var(--accent)]/25">
+      <CardContent className="space-y-3 !p-4">
+        <div className="flex items-start justify-between gap-3">
+          <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted-fg)]">
+            {label}
+          </p>
+          {Icon ? (
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--muted)] text-[var(--muted-fg)]">
+              <Icon className="h-3.5 w-3.5" strokeWidth={1.75} />
+            </span>
+          ) : null}
+        </div>
+        <div>
+          <p
+            className={cn(
+              "text-2xl font-semibold tracking-tight tabular-nums",
+              tone === "positive" && "text-emerald-600 dark:text-emerald-400",
+              tone === "negative" && "text-rose-600 dark:text-rose-400",
+              tone === "accent" && "text-[var(--accent)]"
+            )}
+          >
+            {value}
+          </p>
+          {hint ? <p className="mt-1 text-xs text-[var(--muted-fg)]">{hint}</p> : null}
+        </div>
       </CardContent>
     </Card>
   );
