@@ -28,7 +28,10 @@ export function middleware(request: NextRequest) {
     if (pathname !== "/") {
       url.searchParams.set("next", pathname);
     }
-    return NextResponse.redirect(url);
+    const res = NextResponse.redirect(url);
+    // Drop any stale session cookie on the way to login
+    res.cookies.set("nexus_session", "", { httpOnly: true, path: "/", maxAge: 0 });
+    return res;
   }
 
   return NextResponse.next();
