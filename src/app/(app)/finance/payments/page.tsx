@@ -5,7 +5,7 @@ import { Badge, statusBadgeVariant } from "@/components/ui/badge";
 import { formatCurrency, formatDate, fullName, labelize, toNumber } from "@/lib/utils";
 import { PaymentsClient } from "./payments-client";
 
-export const metadata = { title: "Payments" };
+export const metadata = { title: "Πληρωμές & Μισθοί" };
 
 export default async function PaymentsPage() {
   await requireSalaryAccess();
@@ -24,15 +24,15 @@ export default async function PaymentsPage() {
   return (
     <div>
       <PageHeader
-        title="Payments & Salary"
-        description="Owner-only payroll records and bonuses."
+        title="Πληρωμές & Μισθοί"
+        description="Καταγραφές μισθοδοσίας και bonus — μόνο Ιδιοκτήτης."
         actions={<PaymentsClient mode="create" employees={employees} />}
       />
 
       {payments.length === 0 ? (
-        <EmptyState title="No payment records" />
+        <EmptyState title="Δεν υπάρχουν καταγραφές πληρωμών" />
       ) : (
-        <Table headers={["Date", "Employee", "Type", "Amount", "Period", "Status", "Actions"]}>
+        <Table headers={["Ημερομηνία", "Υπάλληλος", "Τύπος", "Ποσό", "Περίοδος", "Κατάσταση", "Ενέργειες"]}>
           {payments.map((p) => (
             <tr key={p.id} className="hover:bg-[var(--muted)]/40">
               <Td>{formatDate(p.date)}</Td>

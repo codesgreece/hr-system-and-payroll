@@ -23,15 +23,15 @@ export function DepartmentsClient({
 }) {
   if (mode === "create") {
     return (
-      <FormModal title="Add Department" triggerLabel="+ Add Department">
+      <FormModal title="Προσθήκη τμήματος" triggerLabel="+ Προσθήκη τμήματος">
         {(close) => (
           <ActionForm action={createDepartment} onSuccess={close}>
-            <Input name="name" label="Name" required />
-            <Textarea name="description" label="Description" />
+            <Input name="name" label="Όνομα" required />
+            <Textarea name="description" label="Περιγραφή" />
             <Select
               name="leadId"
-              label="Department Lead"
-              placeholder="Select lead"
+              label="Υπεύθυνος τμήματος"
+              placeholder="Επιλέξτε υπεύθυνο"
               options={optionsFrom(employees)}
             />
           </ActionForm>
@@ -42,16 +42,16 @@ export function DepartmentsClient({
 
   return (
     <div className="flex items-center gap-1">
-      <FormModal title="Edit Department" triggerLabel="Edit" triggerVariant="ghost" triggerSize="sm" icon="edit">
+      <FormModal title="Επεξεργασία τμήματος" triggerLabel="Επεξεργασία" triggerVariant="ghost" triggerSize="sm" icon="edit">
         {(close) => (
           <ActionForm action={updateDepartment} onSuccess={close}>
             <input type="hidden" name="id" value={department!.id} />
-            <Input name="name" label="Name" required defaultValue={department!.name} />
-            <Textarea name="description" label="Description" defaultValue={department!.description || ""} />
+            <Input name="name" label="Όνομα" required defaultValue={department!.name} />
+            <Textarea name="description" label="Περιγραφή" defaultValue={department!.description || ""} />
             <Select
               name="leadId"
-              label="Department Lead"
-              placeholder="Select lead"
+              label="Υπεύθυνος τμήματος"
+              placeholder="Επιλέξτε υπεύθυνο"
               defaultValue={department!.leadId || ""}
               options={optionsFrom(employees)}
             />

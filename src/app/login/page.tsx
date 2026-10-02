@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/auth";
 import { LoginForm } from "@/components/auth/login-form";
 
-export const metadata = { title: "Sign in" };
+export const metadata = { title: "Σύνδεση" };
 
 export default async function LoginPage() {
   const user = await getSessionUser();
@@ -21,7 +21,7 @@ export default async function LoginPage() {
             Control Center
           </h1>
           <p className="mt-2 text-sm text-[var(--muted-fg)]">
-            Sign in to manage people, work, and operations.
+            Συνδεθείτε για διαχείριση ανθρώπων, εργασίας και λειτουργιών.
           </p>
         </div>
 
@@ -32,7 +32,7 @@ export default async function LoginPage() {
         </div>
 
         <p className="mt-6 text-center text-xs text-[var(--muted-fg)]">
-          Private internal dashboard · Authorized users only
+          Ιδιωτικό εσωτερικό dashboard · Μόνο εξουσιοδοτημένοι χρήστες
         </p>
       </div>
     </div>

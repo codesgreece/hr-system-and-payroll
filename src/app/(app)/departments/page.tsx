@@ -4,7 +4,7 @@ import { PageHeader, EmptyState, Table, Td } from "@/components/ui/page";
 import { fullName } from "@/lib/utils";
 import { DepartmentsClient } from "./departments-client";
 
-export const metadata = { title: "Departments" };
+export const metadata = { title: "Τμήματα" };
 
 export default async function DepartmentsPage() {
   await requireUser();
@@ -24,15 +24,15 @@ export default async function DepartmentsPage() {
   return (
     <div>
       <PageHeader
-        title="Departments"
-        description="Organize people by team structure."
+        title="Τμήματα"
+        description="Οργάνωση ανθρώπων ανά δομή ομάδας."
         actions={<DepartmentsClient mode="create" employees={employees} />}
       />
 
       {departments.length === 0 ? (
-        <EmptyState title="No departments" />
+        <EmptyState title="Δεν υπάρχουν τμήματα" />
       ) : (
-        <Table headers={["Name", "Description", "Lead", "Active Employees", "Actions"]}>
+        <Table headers={["Όνομα", "Περιγραφή", "Υπεύθυνος", "Ενεργοί υπάλληλοι", "Ενέργειες"]}>
           {departments.map((d) => (
             <tr key={d.id} className="hover:bg-[var(--muted)]/40">
               <Td className="font-medium">{d.name}</Td>

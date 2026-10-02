@@ -49,7 +49,7 @@ export function ActionForm({
   action,
   onSuccess,
   children,
-  successMessage = "Saved",
+  successMessage = "Αποθηκεύτηκε",
   className,
 }: {
   action: (form: FormData) => Promise<void>;
@@ -80,7 +80,7 @@ export function ActionForm({
               onSuccess?.();
               throw e;
             }
-            const msg = e instanceof Error ? e.message : "Something went wrong";
+            const msg = e instanceof Error ? e.message : "Κάτι πήγε στραβά";
             toast(msg, "error");
           }
         });
@@ -90,7 +90,7 @@ export function ActionForm({
         {children}
         <div className="flex justify-end gap-2 pt-2">
           <Button type="submit" disabled={pending}>
-            {pending ? "Saving…" : "Save"}
+            {pending ? "Αποθήκευση…" : "Αποθήκευση"}
           </Button>
         </div>
       </fieldset>
@@ -101,7 +101,7 @@ export function ActionForm({
 export function ConfirmDelete({
   action,
   id,
-  label = "Delete",
+  label = "Διαγραφή",
 }: {
   action: (form: FormData) => Promise<void>;
   id: string;
@@ -112,13 +112,13 @@ export function ConfirmDelete({
   return (
     <form
       action={(fd) => {
-        if (!confirm("Are you sure?")) return;
+        if (!confirm("Είστε σίγουροι;")) return;
         startTransition(async () => {
           try {
             await action(fd);
-            toast("Deleted");
+            toast("Διαγράφηκε");
           } catch {
-            toast("Failed to delete", "error");
+            toast("Αποτυχία διαγραφής", "error");
           }
         });
       }}

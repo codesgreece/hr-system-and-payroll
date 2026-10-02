@@ -6,7 +6,7 @@ import { formatDate, fullName, labelize } from "@/lib/utils";
 import { TasksClient } from "./tasks-client";
 import Link from "next/link";
 
-export const metadata = { title: "Tasks" };
+export const metadata = { title: "Εργασίες" };
 
 export default async function TasksPage({
   searchParams,
@@ -38,15 +38,15 @@ export default async function TasksPage({
   return (
     <div>
       <PageHeader
-        title={mine ? "My Tasks" : "Tasks"}
-        description="Keep delivery simple and visible."
+        title={mine ? "Οι εργασίες μου" : "Εργασίες"}
+        description="Κρατήστε τις παραδόσεις απλές και ορατές."
         actions={
           <div className="flex gap-2">
             <Link
               href={mine ? "/tasks" : "/tasks?mine=1"}
               className="inline-flex h-9 items-center rounded-lg border border-[var(--border)] px-3 text-sm text-[var(--muted-fg)] hover:bg-[var(--muted)]"
             >
-              {mine ? "All tasks" : "My tasks"}
+              {mine ? "Όλες οι εργασίες" : "Οι εργασίες μου"}
             </Link>
             <TasksClient mode="create" projects={projects} employees={employees} />
           </div>
@@ -54,9 +54,9 @@ export default async function TasksPage({
       />
 
       {tasks.length === 0 ? (
-        <EmptyState title="No tasks" />
+        <EmptyState title="Δεν υπάρχουν εργασίες" />
       ) : (
-        <Table headers={["Title", "Project", "Assignee", "Priority", "Status", "Due", "Actions"]}>
+        <Table headers={["Τίτλος", "Έργο", "Ανάθεση", "Προτεραιότητα", "Κατάσταση", "Προθεσμία", "Ενέργειες"]}>
           {tasks.map((t) => (
             <tr key={t.id} className="hover:bg-[var(--muted)]/40">
               <Td className="font-medium">{t.title}</Td>

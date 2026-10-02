@@ -35,18 +35,18 @@ export function ExpensesClient({
 }) {
   const fields = (e?: Expense) => (
     <>
-      <Input name="provider" label="Provider" required defaultValue={e?.provider} />
-      <Input name="description" label="Description" defaultValue={e?.description || ""} />
+      <Input name="provider" label="Πάροχος" required defaultValue={e?.provider} />
+      <Input name="description" label="Περιγραφή" defaultValue={e?.description || ""} />
       <div className="grid gap-3 sm:grid-cols-2">
         <Select
           name="category"
-          label="Category"
+          label="Κατηγορία"
           defaultValue={e?.category || "SOFTWARE"}
           options={EXPENSE_CATEGORIES.map((c) => ({ value: c, label: labelize(c) }))}
         />
         <Input
           name="amount"
-          label="Amount (€)"
+          label="Ποσό (€)"
           type="number"
           step="0.01"
           required
@@ -54,19 +54,19 @@ export function ExpensesClient({
         />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input name="date" label="Date" type="date" required defaultValue={e ? toDate(e.date) : ""} />
+        <Input name="date" label="Ημερομηνία" type="date" required defaultValue={e ? toDate(e.date) : ""} />
         <Select
           name="paymentMethod"
-          label="Payment Method"
-          placeholder="Select"
+          label="Τρόπος πληρωμής"
+          placeholder="Επιλογή"
           defaultValue={e?.paymentMethod || ""}
           options={PAYMENT_METHODS.map((m) => ({ value: m, label: labelize(m) }))}
         />
       </div>
       <Select
         name="projectId"
-        label="Project (optional)"
-        placeholder="No project"
+        label="Έργο (προαιρετικό)"
+        placeholder="Χωρίς έργο"
         defaultValue={e?.projectId || ""}
         options={optionsFrom(projects)}
       />
@@ -77,17 +77,17 @@ export function ExpensesClient({
           defaultChecked={e?.recurring}
           className="accent-[var(--accent)]"
         />
-        Recurring expense
+        Επαναλαμβανόμενο έξοδο
       </label>
-      <Textarea name="notes" label="Notes" defaultValue={e?.notes || ""} />
+      <Textarea name="notes" label="Σημειώσεις" defaultValue={e?.notes || ""} />
     </>
   );
 
   if (mode === "create") {
     return (
-      <FormModal title="Add Expense" triggerLabel="+ Add Expense" wide>
+      <FormModal title="Προσθήκη εξόδου" triggerLabel="+ Προσθήκη εξόδου" wide>
         {(close) => (
-          <ActionForm action={createExpense} onSuccess={close} successMessage="Expense recorded">
+          <ActionForm action={createExpense} onSuccess={close} successMessage="Το έξοδο καταχωρήθηκε">
             {fields()}
           </ActionForm>
         )}
@@ -97,7 +97,7 @@ export function ExpensesClient({
 
   return (
     <div className="flex items-center gap-1">
-      <FormModal title="Edit Expense" triggerLabel="Edit" triggerVariant="ghost" triggerSize="sm" icon="edit" wide>
+      <FormModal title="Επεξεργασία εξόδου" triggerLabel="Επεξεργασία" triggerVariant="ghost" triggerSize="sm" icon="edit" wide>
         {(close) => (
           <ActionForm action={updateExpense} onSuccess={close}>
             <input type="hidden" name="id" value={expense!.id} />

@@ -47,65 +47,65 @@ function EmployeeFields({
   return (
     <>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input name="firstName" label="First Name" required defaultValue={employee?.firstName} />
-        <Input name="lastName" label="Last Name" required defaultValue={employee?.lastName} />
+        <Input name="firstName" label="Όνομα" required defaultValue={employee?.firstName} />
+        <Input name="lastName" label="Επώνυμο" required defaultValue={employee?.lastName} />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <Input name="email" label="Email" type="email" required defaultValue={employee?.email} />
-        <Input name="phone" label="Phone" defaultValue={employee?.phone || ""} />
+        <Input name="phone" label="Τηλέφωνο" defaultValue={employee?.phone || ""} />
       </div>
-      <Input name="address" label="Address" defaultValue={employee?.address || ""} />
+      <Input name="address" label="Διεύθυνση" defaultValue={employee?.address || ""} />
       <Input
         name="emergencyContact"
-        label="Emergency Contact"
+        label="Επαφή έκτακτης ανάγκης"
         defaultValue={employee?.emergencyContact || ""}
       />
       <div className="grid gap-3 sm:grid-cols-2">
         <Select
           name="positionId"
-          label="Position"
-          placeholder="Select position"
+          label="Θέση"
+          placeholder="Επιλέξτε θέση"
           defaultValue={employee?.positionId || ""}
           options={optionsFrom(positions)}
         />
         <Select
           name="departmentId"
-          label="Department"
-          placeholder="Select department"
+          label="Τμήμα"
+          placeholder="Επιλέξτε τμήμα"
           defaultValue={employee?.departmentId || ""}
           options={optionsFrom(departments)}
         />
       </div>
       <Select
         name="teamLeaderId"
-        label="Team Leader"
-        placeholder="Select leader"
+        label="Υπεύθυνος ομάδας"
+        placeholder="Επιλέξτε υπεύθυνο"
         defaultValue={employee?.teamLeaderId || ""}
         options={optionsFrom(leaders)}
       />
       <div className="grid gap-3 sm:grid-cols-3">
         <Select
           name="employmentType"
-          label="Employment Type"
+          label="Τύπος απασχόλησης"
           defaultValue={employee?.employmentType || "FULL_TIME"}
           options={EMPLOYMENT_TYPES.map((t) => ({ value: t, label: labelize(t) }))}
         />
         <Input
           name="startDate"
-          label="Start Date"
+          label="Ημερομηνία έναρξης"
           type="date"
           defaultValue={employee ? toDateInput(employee.startDate) : ""}
         />
         <Select
           name="status"
-          label="Status"
+          label="Κατάσταση"
           defaultValue={employee?.status || "ACTIVE"}
           options={EMPLOYEE_STATUSES.map((t) => ({ value: t, label: labelize(t) }))}
         />
       </div>
       <Textarea
         name="performanceNotes"
-        label="Performance Notes"
+        label="Σημειώσεις απόδοσης"
         defaultValue={employee?.performanceNotes || ""}
       />
     </>
@@ -127,9 +127,9 @@ export function EmployeesClient({
 }) {
   if (mode === "create") {
     return (
-      <FormModal title="Add Employee" triggerLabel="+ Add Employee" wide>
+      <FormModal title="Προσθήκη υπαλλήλου" triggerLabel="+ Προσθήκη υπαλλήλου" wide>
         {(close) => (
-          <ActionForm action={createEmployee} onSuccess={close} successMessage="Employee created">
+          <ActionForm action={createEmployee} onSuccess={close} successMessage="Ο υπάλληλος δημιουργήθηκε">
             <EmployeeFields
               positions={positions}
               departments={departments}
@@ -142,9 +142,9 @@ export function EmployeesClient({
   }
 
   return (
-    <FormModal title="Edit Employee" triggerLabel="Edit" triggerVariant="ghost" triggerSize="sm" icon="edit" wide>
+    <FormModal title="Επεξεργασία υπαλλήλου" triggerLabel="Επεξεργασία" triggerVariant="ghost" triggerSize="sm" icon="edit" wide>
       {(close) => (
-        <ActionForm action={updateEmployee} onSuccess={close} successMessage="Employee updated">
+        <ActionForm action={updateEmployee} onSuccess={close} successMessage="Ο υπάλληλος ενημερώθηκε">
           <input type="hidden" name="id" value={employee!.id} />
           <EmployeeFields
             employee={employee}
@@ -166,16 +166,16 @@ export function ArchiveButton({ id }: { id: string }) {
       size="sm"
       disabled={pending}
       onClick={() => {
-        if (!confirm("Archive this employee?")) return;
+        if (!confirm("Αρχειοθέτηση αυτού του υπαλλήλου;")) return;
         const fd = new FormData();
         fd.set("id", id);
         start(async () => {
           await archiveEmployee(fd);
-          toast("Employee archived");
+          toast("Ο υπάλληλος αρχειοθετήθηκε");
         });
       }}
     >
-      Archive
+      Αρχειοθέτηση
     </Button>
   );
 }

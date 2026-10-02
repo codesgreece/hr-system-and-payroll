@@ -1,5 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { format, formatDistanceToNow, isValid, parseISO } from "date-fns";
+import { el as elLocale } from "date-fns/locale";
+import { el } from "@/lib/el";
 
 export function cn(...inputs: ClassValue[]) {
   return clsx(inputs);
@@ -31,7 +33,7 @@ export function formatDateTime(date: Date | string | null | undefined) {
 
 export function relativeTime(date: Date | string) {
   const d = typeof date === "string" ? parseISO(date) : date;
-  return formatDistanceToNow(d, { addSuffix: true });
+  return formatDistanceToNow(d, { addSuffix: true, locale: elLocale });
 }
 
 export function fullName(firstName: string, lastName: string) {
@@ -39,10 +41,7 @@ export function fullName(firstName: string, lastName: string) {
 }
 
 export function labelize(value: string) {
-  return value
-    .replace(/_/g, " ")
-    .toLowerCase()
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+  return el(value);
 }
 
 export function toNumber(value: unknown): number {

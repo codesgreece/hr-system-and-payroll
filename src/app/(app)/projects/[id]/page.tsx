@@ -48,7 +48,7 @@ export default async function ProjectDetailPage({
     <div>
       <PageHeader
         title={project.name}
-        description={project.client || "No client"}
+        description={project.client || "Χωρίς πελάτη"}
         actions={
           <ProjectsClient
             mode="edit"
@@ -65,7 +65,7 @@ export default async function ProjectDetailPage({
         <Badge variant={statusBadgeVariant(project.status)}>{labelize(project.status)}</Badge>
         {project.deadline ? (
           <span className="text-xs text-[var(--muted-fg)]">
-            Deadline {formatDate(project.deadline)}
+            Προθεσμία {formatDate(project.deadline)}
           </span>
         ) : null}
       </div>
@@ -77,12 +77,12 @@ export default async function ProjectDetailPage({
       <div className="grid gap-4 lg:grid-cols-3">
         <Card>
           <CardHeader>
-            <CardTitle>Team</CardTitle>
+            <CardTitle>Ομάδα</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm">
             {project.teamLeader ? (
               <p>
-                <span className="text-[var(--muted-fg)]">Lead · </span>
+                <span className="text-[var(--muted-fg)]">Υπεύθυνος · </span>
                 {fullName(project.teamLeader.firstName, project.teamLeader.lastName)}
               </p>
             ) : null}
@@ -100,14 +100,14 @@ export default async function ProjectDetailPage({
 
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Tasks</CardTitle>
+            <CardTitle>Εργασίες</CardTitle>
             <Link href="/tasks" className="text-xs text-[var(--accent)]">
-              All tasks
+              Όλες οι εργασίες
             </Link>
           </CardHeader>
           <CardContent className="space-y-2">
             {project.tasks.length === 0 ? (
-              <p className="text-sm text-[var(--muted-fg)]">No tasks</p>
+              <p className="text-sm text-[var(--muted-fg)]">Δεν υπάρχουν εργασίες</p>
             ) : (
               project.tasks.map((t) => (
                 <div key={t.id} className="flex items-center justify-between gap-2 text-sm">
@@ -131,27 +131,27 @@ export default async function ProjectDetailPage({
         <div className="mt-6">
           <Card>
             <CardHeader>
-              <CardTitle>Profitability</CardTitle>
+              <CardTitle>Κερδοφορία</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="mb-4 grid gap-3 sm:grid-cols-3">
                 <div>
-                  <p className="text-xs text-[var(--muted-fg)]">Revenue</p>
+                  <p className="text-xs text-[var(--muted-fg)]">Έσοδα</p>
                   <p className="text-xl font-semibold tabular-nums">{formatCurrency(revenueTotal)}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-[var(--muted-fg)]">Expenses</p>
+                  <p className="text-xs text-[var(--muted-fg)]">Έξοδα</p>
                   <p className="text-xl font-semibold tabular-nums">{formatCurrency(expenseTotal)}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-[var(--muted-fg)]">Net</p>
+                  <p className="text-xs text-[var(--muted-fg)]">Καθαρό</p>
                   <p className="text-xl font-semibold tabular-nums">
                     {formatCurrency(revenueTotal - expenseTotal)}
                   </p>
                 </div>
               </div>
               {Array.isArray(project.revenues) && project.revenues.length > 0 ? (
-                <Table headers={["Date", "Client", "Amount", "Status"]}>
+                <Table headers={["Ημερομηνία", "Πελάτης", "Ποσό", "Κατάσταση"]}>
                   {project.revenues.map((r) => (
                     <tr key={r.id}>
                       <Td>{formatDate(r.date)}</Td>

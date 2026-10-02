@@ -5,7 +5,7 @@ import { Badge, statusBadgeVariant } from "@/components/ui/badge";
 import { formatDate, labelize } from "@/lib/utils";
 import { RecruitmentClient } from "./recruitment-client";
 
-export const metadata = { title: "Recruitment" };
+export const metadata = { title: "Προσλήψεις" };
 
 export default async function RecruitmentPage() {
   await requireUser();
@@ -20,15 +20,15 @@ export default async function RecruitmentPage() {
   return (
     <div>
       <PageHeader
-        title="Recruitment"
-        description="Lightweight candidate pipeline."
+        title="Προσλήψεις"
+        description="Απλό pipeline υποψηφίων."
         actions={<RecruitmentClient mode="create" positions={positions} />}
       />
 
       {candidates.length === 0 ? (
-        <EmptyState title="No candidates" />
+        <EmptyState title="Δεν υπάρχουν υποψήφιοι" />
       ) : (
-        <Table headers={["Name", "Email", "Phone", "Position", "Status", "Added", "Actions"]}>
+        <Table headers={["Όνομα", "Email", "Τηλέφωνο", "Θέση", "Κατάσταση", "Προστέθηκε", "Ενέργειες"]}>
           {candidates.map((c) => (
             <tr key={c.id} className="hover:bg-[var(--muted)]/40">
               <Td className="font-medium">{c.name}</Td>

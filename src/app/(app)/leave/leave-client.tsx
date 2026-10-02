@@ -34,7 +34,7 @@ export function LeaveClient({
     <>
       <Select
         name="employeeId"
-        label="Employee"
+        label="Υπάλληλος"
         required
         defaultValue={l?.employeeId}
         options={optionsFrom(employees)}
@@ -42,30 +42,30 @@ export function LeaveClient({
       <div className="grid gap-3 sm:grid-cols-2">
         <Select
           name="type"
-          label="Type"
+          label="Τύπος"
           defaultValue={l?.type || "ANNUAL"}
           options={LEAVE_TYPES.map((t) => ({ value: t, label: labelize(t) }))}
         />
         <Select
           name="status"
-          label="Status"
+          label="Κατάσταση"
           defaultValue={l?.status || "PLANNED"}
           options={LEAVE_STATUSES.map((t) => ({ value: t, label: labelize(t) }))}
         />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input name="startDate" label="Start Date" type="date" required defaultValue={l ? toDate(l.startDate) : ""} />
-        <Input name="endDate" label="End Date" type="date" required defaultValue={l ? toDate(l.endDate) : ""} />
+        <Input name="startDate" label="Ημερομηνία έναρξης" type="date" required defaultValue={l ? toDate(l.startDate) : ""} />
+        <Input name="endDate" label="Ημερομηνία λήξης" type="date" required defaultValue={l ? toDate(l.endDate) : ""} />
       </div>
-      <Textarea name="notes" label="Notes" defaultValue={l?.notes || ""} />
+      <Textarea name="notes" label="Σημειώσεις" defaultValue={l?.notes || ""} />
     </>
   );
 
   if (mode === "create") {
     return (
-      <FormModal title="Record Leave" triggerLabel="+ Add Leave">
+      <FormModal title="Καταχώρηση άδειας" triggerLabel="+ Προσθήκη άδειας">
         {(close) => (
-          <ActionForm action={createLeave} onSuccess={close} successMessage="Leave recorded">
+          <ActionForm action={createLeave} onSuccess={close} successMessage="Η άδεια καταχωρήθηκε">
             {fields()}
           </ActionForm>
         )}
@@ -75,7 +75,7 @@ export function LeaveClient({
 
   return (
     <div className="flex items-center gap-1">
-      <FormModal title="Edit Leave" triggerLabel="Edit" triggerVariant="ghost" triggerSize="sm" icon="edit">
+      <FormModal title="Επεξεργασία άδειας" triggerLabel="Επεξεργασία" triggerVariant="ghost" triggerSize="sm" icon="edit">
         {(close) => (
           <ActionForm action={updateLeave} onSuccess={close}>
             <input type="hidden" name="id" value={leave!.id} />

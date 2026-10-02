@@ -15,11 +15,11 @@ export function PositionsClient({
 }) {
   if (mode === "create") {
     return (
-      <FormModal title="Add Position" triggerLabel="+ Add Position">
+      <FormModal title="Προσθήκη θέσης" triggerLabel="+ Προσθήκη θέσης">
         {(close) => (
           <ActionForm action={createPosition} onSuccess={close}>
-            <Input name="name" label="Name" required />
-            <Textarea name="description" label="Description" />
+            <Input name="name" label="Όνομα" required />
+            <Textarea name="description" label="Περιγραφή" />
           </ActionForm>
         )}
       </FormModal>
@@ -28,12 +28,12 @@ export function PositionsClient({
 
   return (
     <div className="flex items-center gap-1">
-      <FormModal title="Edit Position" triggerLabel="Edit" triggerVariant="ghost" triggerSize="sm" icon="edit">
+      <FormModal title="Επεξεργασία θέσης" triggerLabel="Επεξεργασία" triggerVariant="ghost" triggerSize="sm" icon="edit">
         {(close) => (
           <ActionForm action={updatePosition} onSuccess={close}>
             <input type="hidden" name="id" value={position!.id} />
-            <Input name="name" label="Name" required defaultValue={position!.name} />
-            <Textarea name="description" label="Description" defaultValue={position!.description || ""} />
+            <Input name="name" label="Όνομα" required defaultValue={position!.name} />
+            <Textarea name="description" label="Περιγραφή" defaultValue={position!.description || ""} />
           </ActionForm>
         )}
       </FormModal>

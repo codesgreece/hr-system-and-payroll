@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge, statusBadgeVariant } from "@/components/ui/badge";
 import { fullName, labelize } from "@/lib/utils";
 
-export const metadata = { title: "Search" };
+export const metadata = { title: "Αναζήτηση" };
 
 export default async function SearchPage({
   searchParams,
@@ -22,16 +22,16 @@ export default async function SearchPage({
   if (!q) {
     return (
       <div>
-        <PageHeader title="Search" description="Find employees, projects, tasks, and candidates." />
+        <PageHeader title="Αναζήτηση" description="Βρείτε υπαλλήλους, έργα, εργασίες και υποψηφίους." />
         <form className="mb-6">
           <input
             name="q"
-            placeholder="Type a name, client, or task…"
+            placeholder="Πληκτρολογήστε όνομα, πελάτη ή εργασία…"
             autoFocus
             className="h-11 w-full max-w-xl rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 text-sm outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
           />
         </form>
-        <EmptyState title="Start typing to search" />
+        <EmptyState title="Ξεκινήστε να πληκτρολογείτε" />
       </div>
     );
   }
@@ -94,29 +94,29 @@ export default async function SearchPage({
 
   return (
     <div>
-      <PageHeader title="Search" description={`Results for “${q}”`} />
+      <PageHeader title="Αναζήτηση" description={`Αποτελέσματα για “${q}”`} />
       <form className="mb-6">
         <input
           name="q"
           defaultValue={q}
-          placeholder="Search…"
+          placeholder="Αναζήτηση…"
           className="h-11 w-full max-w-xl rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 text-sm outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
         />
       </form>
 
       {empty ? (
-        <EmptyState title="No matches" description="Try another keyword." />
+        <EmptyState title="Δεν βρέθηκαν αποτελέσματα" description="Δοκιμάστε άλλη λέξη-κλειδί." />
       ) : (
         <div className="grid gap-4 lg:grid-cols-2">
-          <ResultGroup title="Employees">
+          <ResultGroup title="Υπάλληλοι">
             {employees.map((e) => (
               <Link key={e.id} href={`/employees/${e.id}`} className="block text-sm hover:text-[var(--accent)]">
                 {fullName(e.firstName, e.lastName)}
-                <span className="text-[var(--muted-fg)]"> · {e.position?.name || "No position"}</span>
+                <span className="text-[var(--muted-fg)]"> · {e.position?.name || "Χωρίς θέση"}</span>
               </Link>
             ))}
           </ResultGroup>
-          <ResultGroup title="Projects">
+          <ResultGroup title="Έργα">
             {projects.map((p) => (
               <Link key={p.id} href={`/projects/${p.id}`} className="flex items-center justify-between text-sm">
                 <span className="hover:text-[var(--accent)]">{p.name}</span>
@@ -124,7 +124,7 @@ export default async function SearchPage({
               </Link>
             ))}
           </ResultGroup>
-          <ResultGroup title="Tasks">
+          <ResultGroup title="Εργασίες">
             {tasks.map((t) => (
               <div key={t.id} className="flex items-center justify-between text-sm">
                 <span>
@@ -137,7 +137,7 @@ export default async function SearchPage({
               </div>
             ))}
           </ResultGroup>
-          <ResultGroup title="Candidates">
+          <ResultGroup title="Υποψήφιοι">
             {candidates.map((c) => (
               <Link key={c.id} href="/recruitment" className="flex items-center justify-between text-sm">
                 <span>{c.name}</span>
@@ -146,7 +146,7 @@ export default async function SearchPage({
             ))}
           </ResultGroup>
           {owner ? (
-            <ResultGroup title="Clients / Revenue">
+            <ResultGroup title="Πελάτες / Έσοδα">
               {revenues.map((r) => (
                 <Link key={r.id} href="/finance/revenue" className="block text-sm hover:text-[var(--accent)]">
                   {r.client}

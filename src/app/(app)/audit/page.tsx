@@ -3,7 +3,7 @@ import { requireOwner } from "@/lib/auth";
 import { PageHeader, EmptyState, Table, Td } from "@/components/ui/page";
 import { formatDateTime } from "@/lib/utils";
 
-export const metadata = { title: "Audit Log" };
+export const metadata = { title: "Αρχείο ενεργειών" };
 
 export default async function AuditPage() {
   await requireOwner();
@@ -16,17 +16,17 @@ export default async function AuditPage() {
   return (
     <div>
       <PageHeader
-        title="Audit Log"
-        description="Important actions across the Control Center."
+        title="Αρχείο ενεργειών"
+        description="Σημαντικές ενέργειες στο Control Center."
       />
 
       {logs.length === 0 ? (
-        <EmptyState title="No audit entries" />
+        <EmptyState title="Δεν υπάρχουν καταχωρήσεις" />
       ) : (
-        <Table headers={["User", "Action", "Entity", "Details", "Date"]}>
+        <Table headers={["Χρήστης", "Ενέργεια", "Οντότητα", "Λεπτομέρειες", "Ημερομηνία"]}>
           {logs.map((l) => (
             <tr key={l.id} className="hover:bg-[var(--muted)]/40">
-              <Td className="font-medium">{l.user?.name || "System"}</Td>
+              <Td className="font-medium">{l.user?.name || "Σύστημα"}</Td>
               <Td>{l.action}</Td>
               <Td>{l.entity}</Td>
               <Td className="max-w-xs truncate text-[var(--muted-fg)]">

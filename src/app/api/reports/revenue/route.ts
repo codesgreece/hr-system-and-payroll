@@ -26,7 +26,7 @@ function csv(headers: string[], rows: (string | number)[][]) {
 
 export async function GET() {
   if (!(await guard())) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json({ error: "Απαγορεύεται" }, { status: 403 });
   }
   const rows = await prisma.revenue.findMany({ orderBy: { date: "desc" } });
   return csv(

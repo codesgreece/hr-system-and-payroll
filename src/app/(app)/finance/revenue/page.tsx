@@ -5,7 +5,7 @@ import { Badge, statusBadgeVariant } from "@/components/ui/badge";
 import { formatCurrency, formatDate, labelize, toNumber } from "@/lib/utils";
 import { RevenueClient } from "./revenue-client";
 
-export const metadata = { title: "Revenue" };
+export const metadata = { title: "Έσοδα" };
 
 export default async function RevenuePage({
   searchParams,
@@ -36,8 +36,8 @@ export default async function RevenuePage({
   return (
     <div>
       <PageHeader
-        title="Revenue"
-        description="Manually record income from clients and projects."
+        title="Έσοδα"
+        description="Καταγραφή εσόδων από πελάτες και έργα."
         actions={<RevenueClient mode="create" projects={projects} />}
       />
 
@@ -45,7 +45,7 @@ export default async function RevenuePage({
         <input
           name="client"
           defaultValue={params.client}
-          placeholder="Filter client…"
+          placeholder="Φίλτρο πελάτη…"
           className="h-9 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 text-sm"
         />
         <select
@@ -53,7 +53,7 @@ export default async function RevenuePage({
           defaultValue={params.category || ""}
           className="h-9 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 text-sm"
         >
-          <option value="">All categories</option>
+          <option value="">Όλες οι κατηγορίες</option>
           {["WEBSITE", "LANDING_PAGE", "ECOMMERCE", "MAINTENANCE", "ADVERTISING", "CONSULTING", "OTHER"].map(
             (c) => (
               <option key={c} value={c}>
@@ -67,7 +67,7 @@ export default async function RevenuePage({
           defaultValue={params.status || ""}
           className="h-9 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 text-sm"
         >
-          <option value="">All statuses</option>
+          <option value="">Όλες οι καταστάσεις</option>
           {["PENDING", "PAID", "OVERDUE", "CANCELLED"].map((s) => (
             <option key={s} value={s}>
               {labelize(s)}
@@ -78,14 +78,14 @@ export default async function RevenuePage({
           type="submit"
           className="h-9 rounded-lg border border-[var(--border)] px-3 text-sm hover:bg-[var(--muted)]"
         >
-          Filter
+          Φίλτρο
         </button>
       </form>
 
       {revenues.length === 0 ? (
-        <EmptyState title="No revenue recorded" />
+        <EmptyState title="Δεν έχουν καταχωρηθεί έσοδα" />
       ) : (
-        <Table headers={["Date", "Client", "Project", "Category", "Amount", "Status", "Actions"]}>
+        <Table headers={["Ημερομηνία", "Πελάτης", "Έργο", "Κατηγορία", "Ποσό", "Κατάσταση", "Ενέργειες"]}>
           {revenues.map((r) => (
             <tr key={r.id} className="hover:bg-[var(--muted)]/40">
               <Td>{formatDate(r.date)}</Td>

@@ -1,10 +1,10 @@
-import { Plus_Jakarta_Sans, Instrument_Serif } from "next/font/google";
+import { Manrope, Instrument_Serif } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
 import { ToastProvider } from "@/components/ui/modal";
 
-const sans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
+const sans = Manrope({
+  subsets: ["latin", "greek"],
   variable: "--font-sans",
   display: "swap",
 });
@@ -21,12 +21,12 @@ export const metadata: Metadata = {
     default: "Nexus Control Center",
     template: "%s · Nexus",
   },
-  description: "Premium internal management dashboard for Nexus",
+  description: "Premium εσωτερικό dashboard διαχείρισης για το Nexus",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable} h-full`} suppressHydrationWarning>
+    <html lang="el" className={`${sans.variable} ${display.variable} h-full`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

@@ -664,7 +664,7 @@ export async function createHrUser(form: FormData) {
 export async function assertFinanceOrThrow(userId?: string) {
   const user = await requireUser();
   if (!canAccessFinance(user)) {
-    throw new Error("Forbidden");
+    throw new Error("Απαγορεύεται");
   }
   return user;
 }

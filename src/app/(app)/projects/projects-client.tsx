@@ -35,28 +35,28 @@ export function ProjectsClient({
 }) {
   const fields = (p?: Project) => (
     <>
-      <Input name="name" label="Project Name" required defaultValue={p?.name} />
-      <Input name="client" label="Client" defaultValue={p?.client || ""} />
-      <Textarea name="description" label="Description" defaultValue={p?.description || ""} />
+      <Input name="name" label="Όνομα έργου" required defaultValue={p?.name} />
+      <Input name="client" label="Πελάτης" defaultValue={p?.client || ""} />
+      <Textarea name="description" label="Περιγραφή" defaultValue={p?.description || ""} />
       <Select
         name="status"
-        label="Status"
+        label="Κατάσταση"
         defaultValue={p?.status || "PLANNING"}
         options={PROJECT_STATUSES.map((s) => ({ value: s, label: labelize(s) }))}
       />
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input name="startDate" label="Start Date" type="date" defaultValue={toDate(p?.startDate)} />
-        <Input name="deadline" label="Deadline" type="date" defaultValue={toDate(p?.deadline)} />
+        <Input name="startDate" label="Ημερομηνία έναρξης" type="date" defaultValue={toDate(p?.startDate)} />
+        <Input name="deadline" label="Προθεσμία" type="date" defaultValue={toDate(p?.deadline)} />
       </div>
       <Select
         name="teamLeaderId"
-        label="Team Leader"
-        placeholder="Select leader"
+        label="Υπεύθυνος ομάδας"
+        placeholder="Επιλέξτε υπεύθυνο"
         defaultValue={p?.teamLeaderId || ""}
         options={optionsFrom(employees)}
       />
       <div className="space-y-1.5">
-        <label className="block text-xs font-medium text-[var(--muted-fg)]">Members</label>
+        <label className="block text-xs font-medium text-[var(--muted-fg)]">Μέλη</label>
         <div className="max-h-40 space-y-1 overflow-y-auto rounded-lg border border-[var(--border)] p-2">
           {employees.map((e) => (
             <label key={e.id} className="flex items-center gap-2 rounded px-2 py-1 text-sm hover:bg-[var(--muted)]">
@@ -77,9 +77,9 @@ export function ProjectsClient({
 
   if (mode === "create") {
     return (
-      <FormModal title="New Project" triggerLabel="+ Add Project" wide>
+      <FormModal title="Νέο έργο" triggerLabel="+ Προσθήκη έργου" wide>
         {(close) => (
-          <ActionForm action={createProject} onSuccess={close} successMessage="Project created">
+          <ActionForm action={createProject} onSuccess={close} successMessage="Το έργο δημιουργήθηκε">
             {fields()}
           </ActionForm>
         )}
@@ -88,7 +88,7 @@ export function ProjectsClient({
   }
 
   return (
-    <FormModal title="Edit Project" triggerLabel="Edit" triggerVariant="outline" triggerSize="sm" icon="edit" wide>
+    <FormModal title="Επεξεργασία έργου" triggerLabel="Επεξεργασία" triggerVariant="outline" triggerSize="sm" icon="edit" wide>
       {(close) => (
         <ActionForm action={updateProject} onSuccess={close}>
           <input type="hidden" name="id" value={project!.id} />

@@ -13,7 +13,7 @@ import {
   toNumber,
 } from "@/lib/utils";
 
-export const metadata = { title: "Finance" };
+export const metadata = { title: "Οικονομικά" };
 
 export default async function FinanceOverviewPage({
   searchParams,
@@ -90,16 +90,16 @@ export default async function FinanceOverviewPage({
   const maxMonthly = Math.max(...monthly.map((m) => Math.max(m.revenue, m.expenses)), 1);
 
   const links = [
-    { href: "/finance?range=this_month", label: "This Month", key: "this_month" },
-    { href: "/finance?range=last_month", label: "Last Month", key: "last_month" },
-    { href: "/finance?range=this_year", label: "This Year", key: "this_year" },
+    { href: "/finance?range=this_month", label: "Τρέχων μήνας", key: "this_month" },
+    { href: "/finance?range=last_month", label: "Προηγούμενος μήνας", key: "last_month" },
+    { href: "/finance?range=this_year", label: "Τρέχον έτος", key: "this_year" },
   ];
 
   return (
     <div>
       <PageHeader
-        title="Finance Overview"
-        description="Revenue, expenses, and profit at a glance."
+        title="Επισκόπηση οικονομικών"
+        description="Έσοδα, έξοδα και κέρδος με μια ματιά."
         actions={
           <div className="flex flex-wrap gap-2">
             {links.map((l) => (
@@ -119,13 +119,13 @@ export default async function FinanceOverviewPage({
               href="/finance/revenue"
               className="rounded-lg bg-[var(--accent)] px-3 py-1.5 text-xs font-medium text-white"
             >
-              Revenue
+              Έσοδα
             </Link>
             <Link
               href="/finance/expenses"
               className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-xs font-medium"
             >
-              Expenses
+              Έξοδα
             </Link>
           </div>
         }
@@ -134,7 +134,7 @@ export default async function FinanceOverviewPage({
       <form className="mb-6 flex flex-wrap items-end gap-2">
         <input type="hidden" name="range" value="custom" />
         <div>
-          <label className="mb-1 block text-xs text-[var(--muted-fg)]">From</label>
+          <label className="mb-1 block text-xs text-[var(--muted-fg)]">Από</label>
           <input
             type="date"
             name="from"
@@ -143,7 +143,7 @@ export default async function FinanceOverviewPage({
           />
         </div>
         <div>
-          <label className="mb-1 block text-xs text-[var(--muted-fg)]">To</label>
+          <label className="mb-1 block text-xs text-[var(--muted-fg)]">Έως</label>
           <input
             type="date"
             name="to"
@@ -155,22 +155,22 @@ export default async function FinanceOverviewPage({
           type="submit"
           className="h-9 rounded-lg border border-[var(--border)] px-3 text-sm hover:bg-[var(--muted)]"
         >
-          Custom Range
+          Προσαρμοσμένο διάστημα
         </button>
       </form>
 
       <div className="mb-8 grid gap-3 sm:grid-cols-3">
-        <StatCard label="Revenue" value={formatCurrency(revenueTotal)} />
-        <StatCard label="Expenses" value={formatCurrency(expenseTotal)} />
-        <StatCard label="Net Result" value={formatCurrency(net)} />
+        <StatCard label="Έσοδα" value={formatCurrency(revenueTotal)} />
+        <StatCard label="Έξοδα" value={formatCurrency(expenseTotal)} />
+        <StatCard label="Καθαρό αποτέλεσμα" value={formatCurrency(net)} />
       </div>
 
       <div className="mb-8 grid gap-4 lg:grid-cols-2">
-        <CategoryBars title="Revenue by category" rows={revByCat} />
-        <CategoryBars title="Expenses by category" rows={expByCat} />
+        <CategoryBars title="Έσοδα ανά κατηγορία" rows={revByCat} />
+        <CategoryBars title="Έξοδα ανά κατηγορία" rows={expByCat} />
       </div>
 
-      <SectionLabel>Monthly revenue vs expenses</SectionLabel>
+      <SectionLabel>Μηνιαία έσοδα vs έξοδα</SectionLabel>
       <Card className="mb-8">
         <CardContent className="space-y-3">
           {monthly.map((m) => (
@@ -196,11 +196,11 @@ export default async function FinanceOverviewPage({
         </CardContent>
       </Card>
 
-      <SectionLabel>Profit by website / project</SectionLabel>
+      <SectionLabel>Κέρδος ανά ιστοσελίδα / έργο</SectionLabel>
       <Card>
         <CardContent className="space-y-3">
           {projectRows.length === 0 ? (
-            <p className="text-sm text-[var(--muted-fg)]">No project-linked finance yet</p>
+            <p className="text-sm text-[var(--muted-fg)]">Δεν υπάρχουν ακόμα οικονομικά συνδεδεμένα με έργα</p>
           ) : (
             projectRows.map((p) => (
               <div
@@ -210,13 +210,13 @@ export default async function FinanceOverviewPage({
                 <p className="font-medium">{p.name}</p>
                 <div className="flex gap-4 text-sm tabular-nums">
                   <span className="text-[var(--muted-fg)]">
-                    Rev {formatCurrency(p.revenue)}
+                    Έσ. {formatCurrency(p.revenue)}
                   </span>
                   <span className="text-[var(--muted-fg)]">
-                    Exp {formatCurrency(p.expenses)}
+                    Έξ. {formatCurrency(p.expenses)}
                   </span>
                   <span className="font-semibold">
-                    Net {formatCurrency(p.revenue - p.expenses)}
+                    Καθ. {formatCurrency(p.revenue - p.expenses)}
                   </span>
                 </div>
               </div>
@@ -243,7 +243,7 @@ function CategoryBars({
       </CardHeader>
       <CardContent className="space-y-3">
         {rows.length === 0 ? (
-          <p className="text-sm text-[var(--muted-fg)]">No data</p>
+          <p className="text-sm text-[var(--muted-fg)]">Δεν υπάρχουν δεδομένα</p>
         ) : (
           rows.map((r) => (
             <div key={r.key}>
@@ -283,7 +283,7 @@ function buildMonthly(
     const key = `${cursor.getFullYear()}-${cursor.getMonth()}`;
     months.push({
       key,
-      label: cursor.toLocaleString("en", { month: "short", year: "2-digit" }),
+      label: cursor.toLocaleString("el", { month: "short", year: "2-digit" }),
       revenue: 0,
       expenses: 0,
     });

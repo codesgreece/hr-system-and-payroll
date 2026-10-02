@@ -7,7 +7,7 @@ import { toNumber } from "@/lib/utils";
 export async function GET() {
   const user = await getSessionUser();
   if (!user || !canAccessFinance(user)) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json({ error: "Απαγορεύεται" }, { status: 403 });
   }
   const rows = await prisma.expense.findMany({ orderBy: { date: "desc" } });
   const body = [

@@ -5,7 +5,7 @@ import { Badge, statusBadgeVariant } from "@/components/ui/badge";
 import { formatDate, fullName, labelize } from "@/lib/utils";
 import { LeaveClient } from "./leave-client";
 
-export const metadata = { title: "Leave" };
+export const metadata = { title: "Άδειες" };
 
 export default async function LeavePage() {
   await requireUser();
@@ -24,15 +24,15 @@ export default async function LeavePage() {
   return (
     <div>
       <PageHeader
-        title="Leave"
-        description="Track planned and approved time off."
+        title="Άδειες"
+        description="Παρακολούθηση προγραμματισμένων και εγκεκριμένων αδειών."
         actions={<LeaveClient mode="create" employees={employees} />}
       />
 
       {leaves.length === 0 ? (
-        <EmptyState title="No leave records" />
+        <EmptyState title="Δεν υπάρχουν άδειες" />
       ) : (
-        <Table headers={["Employee", "Type", "Start", "End", "Status", "Notes", "Actions"]}>
+        <Table headers={["Υπάλληλος", "Τύπος", "Έναρξη", "Λήξη", "Κατάσταση", "Σημειώσεις", "Ενέργειες"]}>
           {leaves.map((l) => (
             <tr key={l.id} className="hover:bg-[var(--muted)]/40">
               <Td className="font-medium">

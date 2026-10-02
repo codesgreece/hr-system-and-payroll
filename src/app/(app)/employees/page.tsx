@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { formatDate, fullName, labelize } from "@/lib/utils";
 import { EmployeesClient } from "./employees-client";
 
-export const metadata = { title: "Employees" };
+export const metadata = { title: "Υπάλληλοι" };
 
 export default async function EmployeesPage({
   searchParams,
@@ -48,8 +48,8 @@ export default async function EmployeesPage({
   return (
     <div>
       <PageHeader
-        title="Employees"
-        description="People records for Nexus — not system users."
+        title="Υπάλληλοι"
+        description="Αρχεία ανθρώπων του Nexus — όχι χρήστες συστήματος."
         actions={
           <EmployeesClient
             mode="create"
@@ -64,7 +64,7 @@ export default async function EmployeesPage({
         <input
           name="q"
           defaultValue={q}
-          placeholder="Search employees…"
+          placeholder="Αναζήτηση υπαλλήλων…"
           className="h-9 flex-1 min-w-[180px] rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 text-sm outline-none focus:border-[var(--accent)]"
         />
         <select
@@ -72,22 +72,22 @@ export default async function EmployeesPage({
           defaultValue={params.status || ""}
           className="h-9 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 text-sm"
         >
-          <option value="">Active & on leave</option>
-          <option value="ACTIVE">Active</option>
-          <option value="ON_LEAVE">On leave</option>
-          <option value="ARCHIVED">Archived</option>
+          <option value="">Ενεργοί & σε άδεια</option>
+          <option value="ACTIVE">Ενεργός</option>
+          <option value="ON_LEAVE">Σε άδεια</option>
+          <option value="ARCHIVED">Αρχειοθετημένοι</option>
         </select>
         <Button type="submit" variant="secondary" size="sm">
-          Filter
+          Φίλτρο
         </Button>
       </form>
 
       {employees.length === 0 ? (
-        <EmptyState title="No employees found" description="Add your first team member." />
+        <EmptyState title="Δεν βρέθηκαν υπάλληλοι" description="Προσθέστε το πρώτο μέλος της ομάδας." />
       ) : (
         <>
           <div className="hidden md:block">
-            <Table headers={["Name", "Position", "Department", "Status", "Start Date", "Actions"]}>
+            <Table headers={["Όνομα", "Θέση", "Τμήμα", "Κατάσταση", "Ημερομηνία έναρξης", "Ενέργειες"]}>
               {employees.map((e) => (
                 <tr key={e.id} className="hover:bg-[var(--muted)]/40 transition-colors">
                   <Td>
@@ -109,7 +109,7 @@ export default async function EmployeesPage({
                     <div className="flex items-center gap-1">
                       <Link href={`/employees/${e.id}`}>
                         <Button variant="ghost" size="sm">
-                          View
+                          Προβολή
                         </Button>
                       </Link>
                       <EmployeesClient
@@ -137,7 +137,7 @@ export default async function EmployeesPage({
                   <div>
                     <p className="font-medium">{fullName(e.firstName, e.lastName)}</p>
                     <p className="text-xs text-[var(--muted-fg)]">
-                      {e.position?.name || "No position"} · {e.department?.name || "No dept"}
+                      {e.position?.name || "Χωρίς θέση"} · {e.department?.name || "Χωρίς τμήμα"}
                     </p>
                   </div>
                   <Badge variant={statusBadgeVariant(e.status)}>{labelize(e.status)}</Badge>

@@ -65,47 +65,47 @@ export type NavSection = {
 
 export const navigation: NavSection[] = [
   {
-    items: [{ label: "Dashboard", href: "/dashboard", icon: "dashboard" }],
+    items: [{ label: "Πίνακας", href: "/dashboard", icon: "dashboard" }],
   },
   {
-    title: "People",
+    title: "Άνθρωποι",
     items: [
-      { label: "Employees", href: "/employees", icon: "employees" },
-      { label: "Departments", href: "/departments", icon: "departments" },
-      { label: "Positions", href: "/positions", icon: "positions" },
+      { label: "Υπάλληλοι", href: "/employees", icon: "employees" },
+      { label: "Τμήματα", href: "/departments", icon: "departments" },
+      { label: "Θέσεις", href: "/positions", icon: "positions" },
     ],
   },
   {
     title: "HR",
     items: [
-      { label: "Leave", href: "/leave", icon: "leave" },
-      { label: "Documents", href: "/documents", icon: "documents" },
-      { label: "Recruitment", href: "/recruitment", icon: "recruitment" },
+      { label: "Άδειες", href: "/leave", icon: "leave" },
+      { label: "Έγγραφα", href: "/documents", icon: "documents" },
+      { label: "Προσλήψεις", href: "/recruitment", icon: "recruitment" },
     ],
   },
   {
-    title: "Work",
+    title: "Εργασία",
     items: [
-      { label: "Projects", href: "/projects", icon: "projects" },
-      { label: "Tasks", href: "/tasks", icon: "tasks" },
+      { label: "Έργα", href: "/projects", icon: "projects" },
+      { label: "Εργασίες", href: "/tasks", icon: "tasks" },
     ],
   },
   {
-    title: "Finance",
+    title: "Οικονομικά",
     items: [
-      { label: "Overview", href: "/finance", icon: "finance", ownerOnly: true },
-      { label: "Revenue", href: "/finance/revenue", icon: "revenue", ownerOnly: true },
-      { label: "Expenses", href: "/finance/expenses", icon: "expenses", ownerOnly: true },
-      { label: "Recurring", href: "/finance/recurring", icon: "recurring", ownerOnly: true },
-      { label: "Payments", href: "/finance/payments", icon: "payments", ownerOnly: true },
-      { label: "Reports", href: "/reports", icon: "reports", ownerOnly: true },
+      { label: "Επισκόπηση", href: "/finance", icon: "finance", ownerOnly: true },
+      { label: "Έσοδα", href: "/finance/revenue", icon: "revenue", ownerOnly: true },
+      { label: "Έξοδα", href: "/finance/expenses", icon: "expenses", ownerOnly: true },
+      { label: "Επαναλαμβανόμενα", href: "/finance/recurring", icon: "recurring", ownerOnly: true },
+      { label: "Πληρωμές", href: "/finance/payments", icon: "payments", ownerOnly: true },
+      { label: "Αναφορές", href: "/reports", icon: "reports", ownerOnly: true },
     ],
   },
   {
-    title: "System",
+    title: "Σύστημα",
     items: [
-      { label: "Settings", href: "/settings", icon: "settings", ownerOnly: true },
-      { label: "Audit Log", href: "/audit", icon: "audit", ownerOnly: true },
+      { label: "Ρυθμίσεις", href: "/settings", icon: "settings", ownerOnly: true },
+      { label: "Αρχείο ενεργειών", href: "/audit", icon: "audit", ownerOnly: true },
     ],
   },
 ];

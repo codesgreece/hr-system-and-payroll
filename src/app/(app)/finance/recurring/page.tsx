@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatDate, labelize, toNumber } from "@/lib/utils";
 import { RecurringClient } from "./recurring-client";
 
-export const metadata = { title: "Recurring Expenses" };
+export const metadata = { title: "Επαναλαμβανόμενα έξοδα" };
 
 export default async function RecurringPage() {
   await requireFinanceAccess();
@@ -16,15 +16,15 @@ export default async function RecurringPage() {
   return (
     <div>
       <PageHeader
-        title="Recurring Expenses"
-        description="Expected subscriptions and repeating costs — no payment processing."
+        title="Επαναλαμβανόμενα έξοδα"
+        description="Συνδρομές και επαναλαμβανόμενα κόστη — χωρίς επεξεργασία πληρωμών."
         actions={<RecurringClient mode="create" />}
       />
 
       {items.length === 0 ? (
-        <EmptyState title="No recurring expenses" />
+        <EmptyState title="Δεν υπάρχουν επαναλαμβανόμενα έξοδα" />
       ) : (
-        <Table headers={["Provider", "Amount", "Frequency", "Next payment", "Category", "Status", "Actions"]}>
+        <Table headers={["Πάροχος", "Ποσό", "Συχνότητα", "Επόμενη πληρωμή", "Κατηγορία", "Κατάσταση", "Ενέργειες"]}>
           {items.map((r) => (
             <tr key={r.id} className="hover:bg-[var(--muted)]/40">
               <Td className="font-medium">{r.provider}</Td>
@@ -34,7 +34,7 @@ export default async function RecurringPage() {
               <Td>{labelize(r.category)}</Td>
               <Td>
                 <Badge variant={r.active ? "success" : "muted"}>
-                  {r.active ? "Active" : "Inactive"}
+                  {r.active ? "Ενεργό" : "Ανενεργό"}
                 </Badge>
               </Td>
               <Td>

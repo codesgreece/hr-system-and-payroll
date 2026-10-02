@@ -27,7 +27,7 @@ export function LoginForm() {
     setLoading(false);
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      setError(data.error || "Invalid credentials");
+      setError(data.error || "Μη έγκυρα στοιχεία");
       return;
     }
     router.push(searchParams.get("next") || "/dashboard");
@@ -45,7 +45,7 @@ export function LoginForm() {
         placeholder="you@nexus.gr"
       />
       <Input
-        label="Password"
+        label="Κωδικός"
         name="password"
         type="password"
         required
@@ -54,7 +54,7 @@ export function LoginForm() {
       />
       {error ? <p className="text-sm text-rose-500">{error}</p> : null}
       <Button type="submit" className="w-full" disabled={loading}>
-        {loading ? "Signing in…" : "Sign in"}
+        {loading ? "Σύνδεση…" : "Σύνδεση"}
       </Button>
     </form>
   );

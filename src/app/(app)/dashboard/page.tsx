@@ -31,7 +31,7 @@ import {
   labelize,
 } from "@/lib/utils";
 
-export const metadata = { title: "Dashboard" };
+export const metadata = { title: "Πίνακας" };
 
 function SectionHeader({
   title,
@@ -155,27 +155,27 @@ export default async function DashboardPage() {
   return (
     <div>
       <PageHeader
-        title="Dashboard"
-        description={`Welcome back, ${firstName}.`}
+        title="Πίνακας"
+        description={`Καλωσήρθες, ${firstName}.`}
         actions={
           <div className="flex flex-wrap gap-2">
             <Link href="/employees">
               <Button size="sm" variant="secondary">
                 <Plus className="h-3.5 w-3.5" />
-                Employee
+                Υπάλληλος
               </Button>
             </Link>
             <Link href="/projects">
               <Button size="sm" variant="secondary">
                 <Plus className="h-3.5 w-3.5" />
-                Project
+                Έργο
               </Button>
             </Link>
             {owner ? (
               <Link href="/finance/revenue">
                 <Button size="sm">
                   <Plus className="h-3.5 w-3.5" />
-                  Revenue
+                  Έσοδο
                 </Button>
               </Link>
             ) : null}
@@ -188,20 +188,20 @@ export default async function DashboardPage() {
           <CardContent className="flex flex-col gap-4 !py-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-sm font-semibold text-[var(--foreground)]">
-                Start with people & projects
+                Ξεκινήστε με ανθρώπους & έργα
               </p>
               <p className="mt-1 text-sm text-[var(--muted-fg)]">
-                Your Control Center is ready. Add the first records to see live
-                overview numbers here.
+                Το Control Center είναι έτοιμο. Προσθέστε τις πρώτες εγγραφές για να δείτε
+                ζωντανά νούμερα επισκόπησης εδώ.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
               <Link href="/employees">
-                <Button size="sm">Add employee</Button>
+                <Button size="sm">Προσθήκη υπαλλήλου</Button>
               </Link>
               <Link href="/projects">
                 <Button size="sm" variant="outline">
-                  Add project
+                  Προσθήκη έργου
                 </Button>
               </Link>
             </div>
@@ -210,36 +210,36 @@ export default async function DashboardPage() {
       ) : null}
 
       <section className="mb-7">
-        <SectionHeader title="People" href="/employees" linkLabel="View employees" />
+        <SectionHeader title="Άνθρωποι" href="/employees" linkLabel="Προβολή υπαλλήλων" />
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          <StatCard label="Total Employees" value={totalEmployees} icon={Users} />
-          <StatCard label="Active" value={activeEmployees} icon={UserCheck} />
-          <StatCard label="On Leave" value={onLeave} icon={Palmtree} />
-          <StatCard label="New (30 days)" value={newEmployees} icon={UserPlus} />
+          <StatCard label="Σύνολο υπαλλήλων" value={totalEmployees} icon={Users} />
+          <StatCard label="Ενεργοί" value={activeEmployees} icon={UserCheck} />
+          <StatCard label="Σε άδεια" value={onLeave} icon={Palmtree} />
+          <StatCard label="Νέοι (30 ημέρες)" value={newEmployees} icon={UserPlus} />
         </div>
       </section>
 
       <section className="mb-7">
-        <SectionHeader title="Work" href="/tasks" linkLabel="View tasks" />
+        <SectionHeader title="Εργασία" href="/tasks" linkLabel="Προβολή εργασιών" />
         <div className="grid gap-3 sm:grid-cols-3">
-          <StatCard label="Active Projects" value={activeProjects} icon={FolderKanban} />
-          <StatCard label="Open Tasks" value={openTasks} icon={ListTodo} />
-          <StatCard label="Completed Tasks" value={completedTasks} icon={CheckCircle2} />
+          <StatCard label="Ενεργά έργα" value={activeProjects} icon={FolderKanban} />
+          <StatCard label="Ανοιχτές εργασίες" value={openTasks} icon={ListTodo} />
+          <StatCard label="Ολοκληρωμένες" value={completedTasks} icon={CheckCircle2} />
         </div>
       </section>
 
       {owner ? (
         <section className="mb-7">
-          <SectionHeader title="Finance · This Month" href="/finance" linkLabel="Open finance" />
+          <SectionHeader title="Οικονομικά · Τρέχων μήνας" href="/finance" linkLabel="Άνοιγμα οικονομικών" />
           <div className="grid gap-3 sm:grid-cols-3">
-            <StatCard label="Revenue" value={formatCurrency(revenue)} icon={TrendingUp} />
-            <StatCard label="Expenses" value={formatCurrency(expenses)} icon={Receipt} />
+            <StatCard label="Έσοδα" value={formatCurrency(revenue)} icon={TrendingUp} />
+            <StatCard label="Έξοδα" value={formatCurrency(expenses)} icon={Receipt} />
             <StatCard
-              label="Net Result"
+              label="Καθαρό αποτέλεσμα"
               value={formatCurrency(net)}
               icon={Scale}
               tone={net > 0 ? "positive" : net < 0 ? "negative" : "default"}
-              hint={net > 0 ? "Positive" : net < 0 ? "Negative" : "Break even"}
+              hint={net > 0 ? "Θετικό" : net < 0 ? "Αρνητικό" : "Ισορροπημένο"}
             />
           </div>
         </section>
@@ -248,19 +248,19 @@ export default async function DashboardPage() {
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
+            <CardTitle>Πρόσφατη δραστηριότητα</CardTitle>
             {owner ? (
               <Link href="/audit" className="text-xs text-[var(--accent)] hover:underline">
-                View all
+                Προβολή όλων
               </Link>
             ) : null}
           </CardHeader>
           <CardContent className="space-y-3 !pt-0">
             {recentAudit.length === 0 ? (
               <div className="rounded-lg border border-dashed border-[var(--border)] px-4 py-8 text-center">
-                <p className="text-sm font-medium">No activity yet</p>
+                <p className="text-sm font-medium">Καμία δραστηριότητα ακόμα</p>
                 <p className="mt-1 text-xs text-[var(--muted-fg)]">
-                  Actions across Nexus will appear here.
+                  Οι ενέργειες στο Nexus θα εμφανίζονται εδώ.
                 </p>
               </div>
             ) : (
@@ -271,7 +271,7 @@ export default async function DashboardPage() {
                 >
                   <div>
                     <p className="text-sm">
-                      <span className="font-medium">{log.user?.name || "System"}</span>{" "}
+                      <span className="font-medium">{log.user?.name || "Σύστημα"}</span>{" "}
                       <span className="text-[var(--muted-fg)]">{log.action}</span>{" "}
                       <span className="font-medium">{log.entity.toLowerCase()}</span>
                     </p>
@@ -292,15 +292,15 @@ export default async function DashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Upcoming</CardTitle>
+            <CardTitle>Επερχόμενα</CardTitle>
           </CardHeader>
           <CardContent className="space-y-5 !pt-0">
             <div>
               <p className="mb-2 text-xs font-medium uppercase tracking-wider text-[var(--muted-fg)]">
-                Leave
+                Άδειες
               </p>
               {upcomingLeave.length === 0 ? (
-                <p className="text-sm text-[var(--muted-fg)]">Nothing scheduled</p>
+                <p className="text-sm text-[var(--muted-fg)]">Τίποτα προγραμματισμένο</p>
               ) : (
                 <ul className="space-y-2">
                   {upcomingLeave.map((l) => (
@@ -320,10 +320,10 @@ export default async function DashboardPage() {
 
             <div>
               <p className="mb-2 text-xs font-medium uppercase tracking-wider text-[var(--muted-fg)]">
-                Deadlines
+                Προθεσμίες
               </p>
               {upcomingTasks.length === 0 ? (
-                <p className="text-sm text-[var(--muted-fg)]">No upcoming deadlines</p>
+                <p className="text-sm text-[var(--muted-fg)]">Καμία επερχόμενη προθεσμία</p>
               ) : (
                 <ul className="space-y-2">
                   {upcomingTasks.map((t) => (
@@ -346,10 +346,10 @@ export default async function DashboardPage() {
             {owner ? (
               <div>
                 <p className="mb-2 text-xs font-medium uppercase tracking-wider text-[var(--muted-fg)]">
-                  Recurring Expenses
+                  Επαναλαμβανόμενα έξοδα
                 </p>
                 {upcomingRecurring.length === 0 ? (
-                  <p className="text-sm text-[var(--muted-fg)]">None due soon</p>
+                  <p className="text-sm text-[var(--muted-fg)]">Κανένα σύντομα</p>
                 ) : (
                   <ul className="space-y-2">
                     {upcomingRecurring.map((r) => (

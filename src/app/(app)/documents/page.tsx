@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { daysUntil, formatDate, fullName, labelize } from "@/lib/utils";
 import { DocumentsClient } from "./documents-client";
 
-export const metadata = { title: "Documents" };
+export const metadata = { title: "Έγγραφα" };
 
 export default async function DocumentsPage() {
   await requireUser();
@@ -24,15 +24,15 @@ export default async function DocumentsPage() {
   return (
     <div>
       <PageHeader
-        title="Documents"
-        description="Employee documents with expiration warnings."
+        title="Έγγραφα"
+        description="Έγγραφα υπαλλήλων με προειδοποιήσεις λήξης."
         actions={<DocumentsClient employees={employees} />}
       />
 
       {documents.length === 0 ? (
-        <EmptyState title="No documents" description="Upload contracts, IDs, and certificates." />
+        <EmptyState title="Δεν υπάρχουν έγγραφα" description="Ανεβάστε συμβάσεις, ταυτότητες και πιστοποιητικά." />
       ) : (
-        <Table headers={["Document", "Employee", "Category", "Expires", "Notes", "Actions"]}>
+        <Table headers={["Έγγραφο", "Υπάλληλος", "Κατηγορία", "Λήγει", "Σημειώσεις", "Ενέργειες"]}>
           {documents.map((d) => {
             const days = d.expirationDate ? daysUntil(d.expirationDate) : null;
             const expiring = days !== null && days <= 30;
@@ -56,9 +56,9 @@ export default async function DocumentsPage() {
                     <span className="inline-flex items-center gap-2">
                       {formatDate(d.expirationDate)}
                       {expired ? (
-                        <Badge variant="danger">Expired</Badge>
+                        <Badge variant="danger">Έληξε</Badge>
                       ) : expiring ? (
-                        <Badge variant="warning">{days}d left</Badge>
+                        <Badge variant="warning">{days}ημ. ακόμα</Badge>
                       ) : null}
                     </span>
                   ) : (

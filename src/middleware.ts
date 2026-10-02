@@ -21,7 +21,7 @@ export function middleware(request: NextRequest) {
 
   if (!token && !isPublic && !pathname.startsWith("/_next") && pathname !== "/favicon.ico") {
     if (pathname.startsWith("/api/")) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "Μη εξουσιοδοτημένο" }, { status: 401 });
     }
     const url = request.nextUrl.clone();
     url.pathname = "/login";

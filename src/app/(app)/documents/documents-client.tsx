@@ -20,25 +20,25 @@ export function DocumentsClient({
   }
 
   return (
-    <FormModal title="Upload Document" triggerLabel="+ Upload">
+    <FormModal title="Ανέβασμα εγγράφου" triggerLabel="+ Ανέβασμα">
       {(close) => (
-        <ActionForm action={createDocument} onSuccess={close} successMessage="Document uploaded">
+        <ActionForm action={createDocument} onSuccess={close} successMessage="Το έγγραφο ανέβηκε">
           <Select
             name="employeeId"
-            label="Employee"
+            label="Υπάλληλος"
             required
             options={optionsFrom(employees)}
           />
-          <Input name="name" label="Document Name" required />
+          <Input name="name" label="Όνομα εγγράφου" required />
           <Select
             name="category"
-            label="Category"
+            label="Κατηγορία"
             defaultValue="CONTRACT"
             options={DOCUMENT_CATEGORIES.map((c) => ({ value: c, label: labelize(c) }))}
           />
-          <Input name="file" label="File" type="file" />
-          <Input name="expirationDate" label="Expiration Date" type="date" />
-          <Textarea name="notes" label="Notes" />
+          <Input name="file" label="Αρχείο" type="file" />
+          <Input name="expirationDate" label="Ημερομηνία λήξης" type="date" />
+          <Textarea name="notes" label="Σημειώσεις" />
         </ActionForm>
       )}
     </FormModal>

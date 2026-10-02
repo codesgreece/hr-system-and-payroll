@@ -3,7 +3,7 @@ import { requireUser } from "@/lib/auth";
 import { PageHeader, EmptyState, Table, Td } from "@/components/ui/page";
 import { PositionsClient } from "./positions-client";
 
-export const metadata = { title: "Positions" };
+export const metadata = { title: "Θέσεις" };
 
 export default async function PositionsPage() {
   await requireUser();
@@ -15,15 +15,15 @@ export default async function PositionsPage() {
   return (
     <div>
       <PageHeader
-        title="Positions"
-        description="Job titles used across the organization."
+        title="Θέσεις"
+        description="Τίτλοι θέσεων στον οργανισμό."
         actions={<PositionsClient mode="create" />}
       />
 
       {positions.length === 0 ? (
-        <EmptyState title="No positions" />
+        <EmptyState title="Δεν υπάρχουν θέσεις" />
       ) : (
-        <Table headers={["Name", "Description", "Employees", "Actions"]}>
+        <Table headers={["Όνομα", "Περιγραφή", "Υπάλληλοι", "Ενέργειες"]}>
           {positions.map((p) => (
             <tr key={p.id} className="hover:bg-[var(--muted)]/40">
               <Td className="font-medium">{p.name}</Td>

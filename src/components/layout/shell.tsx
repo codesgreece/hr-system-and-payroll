@@ -77,7 +77,7 @@ export function ThemeToggle() {
   }
 
   return (
-    <Button variant="ghost" size="sm" onClick={toggle} aria-label="Toggle theme">
+    <Button variant="ghost" size="sm" onClick={toggle} aria-label="Αλλαγή θέματος">
       {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </Button>
   );
@@ -131,7 +131,7 @@ export function Sidebar({
         <button
           className="lg:hidden rounded-md p-1 text-[var(--muted-fg)]"
           onClick={() => setOpen(false)}
-          aria-label="Close menu"
+          aria-label="Κλείσιμο μενού"
         >
           <X className="h-4 w-4" />
         </button>
@@ -213,7 +213,7 @@ export function Sidebar({
         <button
           onClick={() => setOpen(true)}
           className="rounded-md p-1.5 text-[var(--muted-fg)] hover:bg-[var(--muted)]"
-          aria-label="Open menu"
+          aria-label="Άνοιγμα μενού"
         >
           <Menu className="h-5 w-5" />
         </button>
@@ -235,7 +235,7 @@ export function TopBar({ showHrReports }: { showHrReports?: boolean }) {
         className="flex h-8 w-full max-w-md items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--muted)]/40 px-3 text-sm text-[var(--muted-fg)] transition-colors hover:border-[var(--accent)]/40 hover:text-[var(--foreground)]"
       >
         <Search className="h-3.5 w-3.5" />
-        <span>Search employees, projects, tasks…</span>
+        <span>Αναζήτηση υπαλλήλων, έργων, εργασιών…</span>
       </Link>
       <div className="flex items-center gap-1">
         {showHrReports ? (
@@ -244,12 +244,12 @@ export function TopBar({ showHrReports }: { showHrReports?: boolean }) {
             prefetch
             className="rounded-lg px-3 py-1.5 text-sm text-[var(--muted-fg)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
           >
-            Reports
+            Αναφορές
           </Link>
         ) : null}
         <ThemeToggle />
         <form action="/api/auth/logout" method="POST">
-          <Button variant="ghost" size="sm" type="submit" aria-label="Sign out">
+          <Button variant="ghost" size="sm" type="submit" aria-label="Αποσύνδεση">
             <LogOut className="h-4 w-4" />
           </Button>
         </form>

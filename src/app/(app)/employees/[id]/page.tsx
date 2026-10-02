@@ -13,7 +13,7 @@ import { SalaryClient } from "../salary-client";
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const emp = await prisma.employee.findUnique({ where: { id } });
-  return { title: emp ? fullName(emp.firstName, emp.lastName) : "Employee" };
+  return { title: emp ? fullName(emp.firstName, emp.lastName) : "Υπάλληλος" };
 }
 
 export default async function EmployeeDetailPage({
@@ -82,35 +82,35 @@ export default async function EmployeeDetailPage({
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Personal Information</CardTitle>
+            <CardTitle>Προσωπικά στοιχεία</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 text-sm">
-            <Row label="Name" value={fullName(employee.firstName, employee.lastName)} />
+            <Row label="Όνομα" value={fullName(employee.firstName, employee.lastName)} />
             <Row label="Email" value={employee.email} />
-            <Row label="Phone" value={employee.phone || "—"} />
-            <Row label="Address" value={employee.address || "—"} />
-            <Row label="Emergency" value={employee.emergencyContact || "—"} />
+            <Row label="Τηλέφωνο" value={employee.phone || "—"} />
+            <Row label="Διεύθυνση" value={employee.address || "—"} />
+            <Row label="Έκτακτη ανάγκη" value={employee.emergencyContact || "—"} />
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Employment</CardTitle>
+            <CardTitle>Απασχόληση</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 text-sm">
-            <Row label="Position" value={employee.position?.name || "—"} />
-            <Row label="Department" value={employee.department?.name || "—"} />
+            <Row label="Θέση" value={employee.position?.name || "—"} />
+            <Row label="Τμήμα" value={employee.department?.name || "—"} />
             <Row
-              label="Team Leader"
+              label="Υπεύθυνος ομάδας"
               value={
                 employee.teamLeader
                   ? fullName(employee.teamLeader.firstName, employee.teamLeader.lastName)
                   : "—"
               }
             />
-            <Row label="Type" value={labelize(employee.employmentType)} />
-            <Row label="Start Date" value={formatDate(employee.startDate)} />
-            <Row label="Status" value={labelize(employee.status)} />
+            <Row label="Τύπος" value={labelize(employee.employmentType)} />
+            <Row label="Ημερομηνία έναρξης" value={formatDate(employee.startDate)} />
+            <Row label="Κατάσταση" value={labelize(employee.status)} />
           </CardContent>
         </Card>
       </div>
@@ -118,11 +118,11 @@ export default async function EmployeeDetailPage({
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Projects</CardTitle>
+            <CardTitle>Έργα</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             {employee.projectMemberships.length === 0 ? (
-              <p className="text-sm text-[var(--muted-fg)]">No projects</p>
+              <p className="text-sm text-[var(--muted-fg)]">Δεν υπάρχουν έργα</p>
             ) : (
               employee.projectMemberships.map((m) => (
                 <Link
@@ -142,11 +142,11 @@ export default async function EmployeeDetailPage({
 
         <Card>
           <CardHeader>
-            <CardTitle>Tasks</CardTitle>
+            <CardTitle>Εργασίες</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             {employee.tasks.length === 0 ? (
-              <p className="text-sm text-[var(--muted-fg)]">No tasks</p>
+              <p className="text-sm text-[var(--muted-fg)]">Δεν υπάρχουν εργασίες</p>
             ) : (
               employee.tasks.map((t) => (
                 <div
@@ -165,14 +165,14 @@ export default async function EmployeeDetailPage({
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Leave</CardTitle>
+            <CardTitle>Άδειες</CardTitle>
             <Link href="/leave" className="text-xs text-[var(--accent)]">
-              Manage
+              Διαχείριση
             </Link>
           </CardHeader>
           <CardContent className="space-y-2">
             {employee.leaves.length === 0 ? (
-              <p className="text-sm text-[var(--muted-fg)]">No leave records</p>
+              <p className="text-sm text-[var(--muted-fg)]">Δεν υπάρχουν άδειες</p>
             ) : (
               employee.leaves.map((l) => (
                 <div key={l.id} className="flex justify-between text-sm">
@@ -188,14 +188,14 @@ export default async function EmployeeDetailPage({
 
         <Card>
           <CardHeader>
-            <CardTitle>Documents</CardTitle>
+            <CardTitle>Έγγραφα</CardTitle>
             <Link href="/documents" className="text-xs text-[var(--accent)]">
-              Manage
+              Διαχείριση
             </Link>
           </CardHeader>
           <CardContent className="space-y-2">
             {employee.documents.length === 0 ? (
-              <p className="text-sm text-[var(--muted-fg)]">No documents</p>
+              <p className="text-sm text-[var(--muted-fg)]">Δεν υπάρχουν έγγραφα</p>
             ) : (
               employee.documents.map((d) => (
                 <div key={d.id} className="flex justify-between text-sm">
@@ -211,7 +211,7 @@ export default async function EmployeeDetailPage({
       {employee.performanceNotes ? (
         <Card className="mt-6">
           <CardHeader>
-            <CardTitle>Performance Notes</CardTitle>
+            <CardTitle>Σημειώσεις απόδοσης</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="whitespace-pre-wrap text-sm text-[var(--muted-fg)]">
@@ -223,14 +223,14 @@ export default async function EmployeeDetailPage({
 
       {showSalary && Array.isArray(employee.salaries) ? (
         <div className="mt-8">
-          <SectionLabel>Compensation · Owner only</SectionLabel>
+          <SectionLabel>Αποδοχές · Μόνο Ιδιοκτήτης</SectionLabel>
           <div className="mb-3 flex justify-end">
             <SalaryClient employeeId={employee.id} />
           </div>
           {employee.salaries.length === 0 ? (
-            <p className="text-sm text-[var(--muted-fg)]">No salary history</p>
+            <p className="text-sm text-[var(--muted-fg)]">Δεν υπάρχει ιστορικό μισθού</p>
           ) : (
-            <Table headers={["Amount", "Frequency", "Effective", "Notes"]}>
+            <Table headers={["Ποσό", "Συχνότητα", "Ισχύς", "Σημειώσεις"]}>
               {employee.salaries.map((s) => (
                 <tr key={s.id}>
                   <Td className="font-medium tabular-nums">{formatCurrency(toNumber(s.amount))}</Td>
@@ -244,8 +244,8 @@ export default async function EmployeeDetailPage({
 
           {Array.isArray(employee.payments) && employee.payments.length > 0 ? (
             <div className="mt-6">
-              <SectionLabel>Payment Records</SectionLabel>
-              <Table headers={["Date", "Type", "Amount", "Period", "Status"]}>
+              <SectionLabel>Καταγραφές πληρωμών</SectionLabel>
+              <Table headers={["Ημερομηνία", "Τύπος", "Ποσό", "Περίοδος", "Κατάσταση"]}>
                 {employee.payments.map((p) => (
                   <tr key={p.id}>
                     <Td>{formatDate(p.date)}</Td>

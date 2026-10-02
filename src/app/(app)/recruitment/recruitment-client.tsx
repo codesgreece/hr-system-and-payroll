@@ -36,31 +36,31 @@ export function RecruitmentClient({
 }) {
   const fields = (c?: Cand) => (
     <>
-      <Input name="name" label="Name" required defaultValue={c?.name} />
+      <Input name="name" label="Όνομα" required defaultValue={c?.name} />
       <div className="grid gap-3 sm:grid-cols-2">
         <Input name="email" label="Email" type="email" required defaultValue={c?.email} />
-        <Input name="phone" label="Phone" defaultValue={c?.phone || ""} />
+        <Input name="phone" label="Τηλέφωνο" defaultValue={c?.phone || ""} />
       </div>
       <Select
         name="positionId"
-        label="Position"
-        placeholder="Select position"
+        label="Θέση"
+        placeholder="Επιλέξτε θέση"
         defaultValue={c?.positionId || ""}
         options={optionsFrom(positions)}
       />
       <Select
         name="status"
-        label="Status"
+        label="Κατάσταση"
         defaultValue={c?.status || "NEW"}
         options={CANDIDATE_STATUSES.map((s) => ({ value: s, label: labelize(s) }))}
       />
-      <Textarea name="notes" label="Notes" defaultValue={c?.notes || ""} />
+      <Textarea name="notes" label="Σημειώσεις" defaultValue={c?.notes || ""} />
     </>
   );
 
   if (mode === "create") {
     return (
-      <FormModal title="Add Candidate" triggerLabel="+ Add Candidate">
+      <FormModal title="Προσθήκη υποψηφίου" triggerLabel="+ Προσθήκη υποψηφίου">
         {(close) => (
           <ActionForm action={createCandidate} onSuccess={close}>
             {fields()}
@@ -73,7 +73,7 @@ export function RecruitmentClient({
   return (
     <div className="flex items-center gap-1">
       {candidate!.status !== "HIRED" ? <HireButton id={candidate!.id} /> : null}
-      <FormModal title="Edit Candidate" triggerLabel="Edit" triggerVariant="ghost" triggerSize="sm" icon="edit">
+      <FormModal title="Επεξεργασία υποψηφίου" triggerLabel="Επεξεργασία" triggerVariant="ghost" triggerSize="sm" icon="edit">
         {(close) => (
           <ActionForm action={updateCandidate} onSuccess={close}>
             <input type="hidden" name="id" value={candidate!.id} />
@@ -94,24 +94,24 @@ function HireButton({ id }: { id: string }) {
       size="sm"
       disabled={pending}
       onClick={() => {
-        if (!confirm("Convert this candidate to an employee?")) return;
+        if (!confirm("Μετατροπή αυτού του υποψηφίου σε υπάλληλο;")) return;
         const fd = new FormData();
         fd.set("id", id);
         start(async () => {
           try {
             await hireCandidate(fd);
-            toast("Candidate hired");
+            toast("Ο υποψήφιος προσλήφθηκε");
           } catch (e) {
             if (e instanceof Error && e.message.includes("NEXT_REDIRECT")) {
-              toast("Candidate hired");
+              toast("Ο υποψήφιος προσλήφθηκε");
               return;
             }
-            toast("Failed to hire", "error");
+            toast("Αποτυχία πρόσληψης", "error");
           }
         });
       }}
     >
-      Hire
+      Πρόσληψη
     </Button>
   );
 }

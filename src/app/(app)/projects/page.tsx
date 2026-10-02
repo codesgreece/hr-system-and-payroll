@@ -6,7 +6,7 @@ import { Badge, statusBadgeVariant } from "@/components/ui/badge";
 import { formatDate, fullName, labelize } from "@/lib/utils";
 import { ProjectsClient } from "./projects-client";
 
-export const metadata = { title: "Projects" };
+export const metadata = { title: "Έργα" };
 
 export default async function ProjectsPage() {
   await requireUser();
@@ -28,17 +28,17 @@ export default async function ProjectsPage() {
   return (
     <div>
       <PageHeader
-        title="Projects"
-        description="Client delivery and internal work."
+        title="Έργα"
+        description="Παραδόσεις πελατών και εσωτερική εργασία."
         actions={<ProjectsClient mode="create" employees={employees} />}
       />
 
       {projects.length === 0 ? (
-        <EmptyState title="No projects yet" />
+        <EmptyState title="Δεν υπάρχουν έργα ακόμα" />
       ) : (
         <>
           <div className="hidden md:block">
-            <Table headers={["Project", "Client", "Status", "Lead", "Deadline", "Team", ""]}>
+            <Table headers={["Έργο", "Πελάτης", "Κατάσταση", "Υπεύθυνος", "Προθεσμία", "Ομάδα", ""]}>
               {projects.map((p) => (
                 <tr key={p.id} className="hover:bg-[var(--muted)]/40">
                   <Td>
@@ -59,7 +59,7 @@ export default async function ProjectsPage() {
                   <Td className="tabular-nums">{p._count.members}</Td>
                   <Td>
                     <Link href={`/projects/${p.id}`}>
-                      <span className="text-xs text-[var(--accent)]">View</span>
+                      <span className="text-xs text-[var(--accent)]">Προβολή</span>
                     </Link>
                   </Td>
                 </tr>
@@ -76,7 +76,7 @@ export default async function ProjectsPage() {
                 <div className="flex justify-between gap-2">
                   <div>
                     <p className="font-medium">{p.name}</p>
-                    <p className="text-xs text-[var(--muted-fg)]">{p.client || "No client"}</p>
+                    <p className="text-xs text-[var(--muted-fg)]">{p.client || "Χωρίς πελάτη"}</p>
                   </div>
                   <Badge variant={statusBadgeVariant(p.status)}>{labelize(p.status)}</Badge>
                 </div>

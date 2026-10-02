@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatDate, labelize, toNumber } from "@/lib/utils";
 import { ExpensesClient } from "./expenses-client";
 
-export const metadata = { title: "Expenses" };
+export const metadata = { title: "Έξοδα" };
 
 export default async function ExpensesPage() {
   await requireFinanceAccess();
@@ -23,15 +23,15 @@ export default async function ExpensesPage() {
   return (
     <div>
       <PageHeader
-        title="Expenses"
-        description="Track software, hosting, tools, and operating costs."
+        title="Έξοδα"
+        description="Παρακολούθηση λογισμικού, hosting, εργαλείων και λειτουργικών εξόδων."
         actions={<ExpensesClient mode="create" projects={projects} />}
       />
 
       {expenses.length === 0 ? (
-        <EmptyState title="No expenses recorded" />
+        <EmptyState title="Δεν έχουν καταχωρηθεί έξοδα" />
       ) : (
-        <Table headers={["Date", "Provider", "Category", "Amount", "Project", "Recurring", "Actions"]}>
+        <Table headers={["Ημερομηνία", "Πάροχος", "Κατηγορία", "Ποσό", "Έργο", "Επαναλαμβανόμενο", "Ενέργειες"]}>
           {expenses.map((e) => (
             <tr key={e.id} className="hover:bg-[var(--muted)]/40">
               <Td>{formatDate(e.date)}</Td>
@@ -46,7 +46,7 @@ export default async function ExpensesPage() {
                 {formatCurrency(toNumber(e.amount))}
               </Td>
               <Td>{e.project?.name || "—"}</Td>
-              <Td>{e.recurring ? <Badge variant="info">Yes</Badge> : "—"}</Td>
+              <Td>{e.recurring ? <Badge variant="info">Ναι</Badge> : "—"}</Td>
               <Td>
                 <ExpensesClient mode="edit" expense={e} projects={projects} />
               </Td>

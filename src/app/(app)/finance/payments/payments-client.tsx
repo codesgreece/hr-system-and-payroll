@@ -35,7 +35,7 @@ export function PaymentsClient({
     <>
       <Select
         name="employeeId"
-        label="Employee"
+        label="Υπάλληλος"
         required
         defaultValue={p?.employeeId}
         options={optionsFrom(employees)}
@@ -43,13 +43,13 @@ export function PaymentsClient({
       <div className="grid gap-3 sm:grid-cols-2">
         <Select
           name="type"
-          label="Type"
+          label="Τύπος"
           defaultValue={p?.type || "SALARY"}
           options={PAYROLL_TYPES.map((t) => ({ value: t, label: labelize(t) }))}
         />
         <Input
           name="amount"
-          label="Amount (€)"
+          label="Ποσό (€)"
           type="number"
           step="0.01"
           required
@@ -57,22 +57,22 @@ export function PaymentsClient({
         />
       </div>
       <div className="grid gap-3 sm:grid-cols-3">
-        <Input name="date" label="Date" type="date" required defaultValue={p ? toDate(p.date) : ""} />
-        <Input name="period" label="Period" defaultValue={p?.period || ""} placeholder="e.g. Oct 2026" />
+        <Input name="date" label="Ημερομηνία" type="date" required defaultValue={p ? toDate(p.date) : ""} />
+        <Input name="period" label="Περίοδος" defaultValue={p?.period || ""} placeholder="π.χ. Οκτ 2026" />
         <Select
           name="status"
-          label="Status"
+          label="Κατάσταση"
           defaultValue={p?.status || "PENDING"}
           options={PAYROLL_STATUSES.map((s) => ({ value: s, label: labelize(s) }))}
         />
       </div>
-      <Textarea name="notes" label="Notes" defaultValue={p?.notes || ""} />
+      <Textarea name="notes" label="Σημειώσεις" defaultValue={p?.notes || ""} />
     </>
   );
 
   if (mode === "create") {
     return (
-      <FormModal title="Add Payment" triggerLabel="+ Add Payment">
+      <FormModal title="Προσθήκη πληρωμής" triggerLabel="+ Προσθήκη πληρωμής">
         {(close) => (
           <ActionForm action={createPayment} onSuccess={close}>
             {fields()}
@@ -84,7 +84,7 @@ export function PaymentsClient({
 
   return (
     <div className="flex items-center gap-1">
-      <FormModal title="Edit Payment" triggerLabel="Edit" triggerVariant="ghost" triggerSize="sm" icon="edit">
+      <FormModal title="Επεξεργασία πληρωμής" triggerLabel="Επεξεργασία" triggerVariant="ghost" triggerSize="sm" icon="edit">
         {(close) => (
           <ActionForm action={updatePayment} onSuccess={close}>
             <input type="hidden" name="id" value={payment!.id} />

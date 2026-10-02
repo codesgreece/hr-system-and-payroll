@@ -35,31 +35,31 @@ export function RevenueClient({
 }) {
   const fields = (r?: Revenue) => (
     <>
-      <Input name="client" label="Client" required defaultValue={r?.client} />
+      <Input name="client" label="Πελάτης" required defaultValue={r?.client} />
       <div className="grid gap-3 sm:grid-cols-2">
         <Select
           name="projectId"
-          label="Project"
-          placeholder="Optional project"
+          label="Έργο"
+          placeholder="Προαιρετικό έργο"
           defaultValue={r?.projectId || ""}
           options={optionsFrom(projects)}
         />
         <Input
           name="projectLabel"
-          label="Project / Website label"
+          label="Ετικέτα έργου / ιστοσελίδας"
           defaultValue={r?.projectLabel || ""}
         />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <Select
           name="category"
-          label="Category"
+          label="Κατηγορία"
           defaultValue={r?.category || "WEBSITE"}
           options={REVENUE_CATEGORIES.map((c) => ({ value: c, label: labelize(c) }))}
         />
         <Input
           name="amount"
-          label="Amount (€)"
+          label="Ποσό (€)"
           type="number"
           step="0.01"
           required
@@ -67,30 +67,30 @@ export function RevenueClient({
         />
       </div>
       <div className="grid gap-3 sm:grid-cols-3">
-        <Input name="date" label="Date" type="date" required defaultValue={r ? toDate(r.date) : ""} />
+        <Input name="date" label="Ημερομηνία" type="date" required defaultValue={r ? toDate(r.date) : ""} />
         <Select
           name="paymentStatus"
-          label="Payment Status"
+          label="Κατάσταση πληρωμής"
           defaultValue={r?.paymentStatus || "PENDING"}
           options={PAYMENT_STATUSES.map((s) => ({ value: s, label: labelize(s) }))}
         />
         <Select
           name="paymentMethod"
-          label="Payment Method"
-          placeholder="Select"
+          label="Τρόπος πληρωμής"
+          placeholder="Επιλογή"
           defaultValue={r?.paymentMethod || ""}
           options={PAYMENT_METHODS.map((m) => ({ value: m, label: labelize(m) }))}
         />
       </div>
-      <Textarea name="notes" label="Notes" defaultValue={r?.notes || ""} />
+      <Textarea name="notes" label="Σημειώσεις" defaultValue={r?.notes || ""} />
     </>
   );
 
   if (mode === "create") {
     return (
-      <FormModal title="Add Revenue" triggerLabel="+ Add Revenue" wide>
+      <FormModal title="Προσθήκη εσόδου" triggerLabel="+ Προσθήκη εσόδου" wide>
         {(close) => (
-          <ActionForm action={createRevenue} onSuccess={close} successMessage="Revenue recorded">
+          <ActionForm action={createRevenue} onSuccess={close} successMessage="Το έσοδο καταχωρήθηκε">
             {fields()}
           </ActionForm>
         )}
@@ -100,7 +100,7 @@ export function RevenueClient({
 
   return (
     <div className="flex items-center gap-1">
-      <FormModal title="Edit Revenue" triggerLabel="Edit" triggerVariant="ghost" triggerSize="sm" icon="edit" wide>
+      <FormModal title="Επεξεργασία εσόδου" triggerLabel="Επεξεργασία" triggerVariant="ghost" triggerSize="sm" icon="edit" wide>
         {(close) => (
           <ActionForm action={updateRevenue} onSuccess={close}>
             <input type="hidden" name="id" value={revenue!.id} />

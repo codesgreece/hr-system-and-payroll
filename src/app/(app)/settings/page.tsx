@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatDate, labelize } from "@/lib/utils";
 import { SettingsClient } from "./settings-client";
 
-export const metadata = { title: "Settings" };
+export const metadata = { title: "Ρυθμίσεις" };
 
 export default async function SettingsPage() {
   await requireOwner();
@@ -21,12 +21,12 @@ export default async function SettingsPage() {
   return (
     <div>
       <PageHeader
-        title="Settings"
-        description="System users for the Control Center."
+        title="Ρυθμίσεις"
+        description="Χρήστες συστήματος του Control Center."
         actions={<SettingsClient employees={employees} />}
       />
 
-      <Table headers={["Name", "Email", "Role", "Created"]}>
+      <Table headers={["Όνομα", "Email", "Ρόλος", "Δημιουργήθηκε"]}>
         {users.map((u) => (
           <tr key={u.id}>
             <Td className="font-medium">{u.name}</Td>
@@ -42,7 +42,7 @@ export default async function SettingsPage() {
       </Table>
 
       <p className="mt-6 text-xs text-[var(--muted-fg)]">
-        Employees are not system users. Only Owner and HR accounts can sign in.
+        Οι υπάλληλοι δεν είναι χρήστες συστήματος. Μόνο λογαριασμοί Ιδιοκτήτη και HR μπορούν να συνδεθούν.
       </p>
     </div>
   );
