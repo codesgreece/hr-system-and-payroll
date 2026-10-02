@@ -24,8 +24,7 @@ const ENUM_LABELS: Record<string, string> = {
   COMPLETED: "Ολοκληρωμένη",
   CANCELLED: "Ακυρωμένη",
 
-  // Documents
-  CONTRACT: "Σύμβαση",
+  // Documents (CONTRACT already above)
   IDENTIFICATION: "Ταυτοποίηση",
   AGREEMENT: "Συμφωνητικό",
   CERTIFICATE: "Πιστοποιητικό",
