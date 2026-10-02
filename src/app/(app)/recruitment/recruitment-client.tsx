@@ -1,0 +1,117 @@
+"use client";
+
+import { useTransition } from "react";
+import { Input, Select, Textarea } from "@/components/ui/input";
+import { FormModal, ActionForm, ConfirmDelete, optionsFrom } from "@/components/ui/form-modal";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/modal";
+import {
+  createCandidate,
+  updateCandidate,
+  deleteCandidate,
+  hireCandidate,
+} from "@/lib/actions";
+import { CANDIDATE_STATUSES } from "@/lib/constants";
+import { labelize } from "@/lib/utils";
+
+type Pos = { id: string; name: string };
+type Cand = {
+  id: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  positionId: string | null;
+  status: string;
+  notes: string | null;
+};
+
+export function RecruitmentClient({
+  mode,
+  candidate,
+  positions,
+}: {
+  mode: "create" | "edit";
+  candidate?: Cand;
+  positions: Pos[];
+}) {
+  const fields = (c?: Cand) => (
+    <>
+      <Input name="name" label="Name" required defaultValue={c?.name} />
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Input name="email" label="Email" type="email" required defaultValue={c?.email} />
+        <Input name="phone" label="Phone" defaultValue={c?.phone || ""} />
+      </div>
+      <Select
+        name="positionId"
+        label="Position"
+        placeholder="Select position"
+        defaultValue={c?.positionId || ""}
+        options={optionsFrom(positions)}
+      />
+      <Select
+        name="status"
+        label="Status"
+        defaultValue={c?.status || "NEW"}
+        options={CANDIDATE_STATUSES.map((s) => ({ value: s, label: labelize(s) }))}
+      />
+      <Textarea name="notes" label="Notes" defaultValue={c?.notes || ""} />
+    </>
+  );
+
+  if (mode === "create") {
+    return (
+      <FormModal title="Add Candidate" triggerLabel="+ Add Candidate">
+        {(close) => (
+          <ActionForm action={createCandidate} onSuccess={close}>
+            {fields()}
+          </ActionForm>
+        )}
+      </FormModal>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-1">
+      {candidate!.status !== "HIRED" ? <HireButton id={candidate!.id} /> : null}
+      <FormModal title="Edit Candidate" triggerLabel="Edit" triggerVariant="ghost" triggerSize="sm" icon="edit">
+        {(close) => (
+          <ActionForm action={updateCandidate} onSuccess={close}>
+            <input type="hidden" name="id" value={candidate!.id} />
+            {fields(candidate)}
+          </ActionForm>
+        )}
+      </FormModal>
+      <ConfirmDelete action={deleteCandidate} id={candidate!.id} />
+    </div>
+  );
+}
+
+function HireButton({ id }: { id: string }) {
+  const [pending, start] = useTransition();
+  return (
+    <Button
+      variant="secondary"
+      size="sm"
+      disabled={pending}
+      onClick={() => {
+        if (!confirm("Convert this candidate to an employee?")) return;
+        const fd = new FormData();
+        fd.set("id", id);
+        start(async () => {
+          try {
+            await hireCandidate(fd);
+            toast("Candidate hired");
+          } catch (e) {
+            if (e instanceof Error && e.message.includes("NEXT_REDIRECT")) {
+              toast("Candidate hired");
+              return;
+            }
+            toast("Failed to hire", "error");
+          }
+        });
+      }}
+    >
+      Hire
+    </Button>
+  );
+}

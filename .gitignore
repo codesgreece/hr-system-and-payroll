@@ -1,0 +1,11 @@
+# Ignore
+node_modules
+.next
+.env
+.env.local
+public/uploads/*
+!public/uploads/.gitkeep
+*.log
+.DS_Store
+npm-debug.log*
+.vercel
