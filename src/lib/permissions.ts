@@ -32,9 +32,29 @@ export function canAccessSettings(user: SessionUser | null | undefined): boolean
   return isOwner(user);
 }
 
+export type NavIcon =
+  | "dashboard"
+  | "employees"
+  | "departments"
+  | "positions"
+  | "leave"
+  | "documents"
+  | "recruitment"
+  | "projects"
+  | "tasks"
+  | "finance"
+  | "revenue"
+  | "expenses"
+  | "recurring"
+  | "payments"
+  | "reports"
+  | "settings"
+  | "audit";
+
 export type NavItem = {
   label: string;
   href: string;
+  icon: NavIcon;
   ownerOnly?: boolean;
 };
 
@@ -45,47 +65,47 @@ export type NavSection = {
 
 export const navigation: NavSection[] = [
   {
-    items: [{ label: "Dashboard", href: "/dashboard" }],
+    items: [{ label: "Dashboard", href: "/dashboard", icon: "dashboard" }],
   },
   {
     title: "People",
     items: [
-      { label: "Employees", href: "/employees" },
-      { label: "Departments", href: "/departments" },
-      { label: "Positions", href: "/positions" },
+      { label: "Employees", href: "/employees", icon: "employees" },
+      { label: "Departments", href: "/departments", icon: "departments" },
+      { label: "Positions", href: "/positions", icon: "positions" },
     ],
   },
   {
     title: "HR",
     items: [
-      { label: "Leave", href: "/leave" },
-      { label: "Documents", href: "/documents" },
-      { label: "Recruitment", href: "/recruitment" },
+      { label: "Leave", href: "/leave", icon: "leave" },
+      { label: "Documents", href: "/documents", icon: "documents" },
+      { label: "Recruitment", href: "/recruitment", icon: "recruitment" },
     ],
   },
   {
     title: "Work",
     items: [
-      { label: "Projects", href: "/projects" },
-      { label: "Tasks", href: "/tasks" },
+      { label: "Projects", href: "/projects", icon: "projects" },
+      { label: "Tasks", href: "/tasks", icon: "tasks" },
     ],
   },
   {
     title: "Finance",
     items: [
-      { label: "Overview", href: "/finance", ownerOnly: true },
-      { label: "Revenue", href: "/finance/revenue", ownerOnly: true },
-      { label: "Expenses", href: "/finance/expenses", ownerOnly: true },
-      { label: "Recurring", href: "/finance/recurring", ownerOnly: true },
-      { label: "Payments", href: "/finance/payments", ownerOnly: true },
-      { label: "Reports", href: "/reports", ownerOnly: true },
+      { label: "Overview", href: "/finance", icon: "finance", ownerOnly: true },
+      { label: "Revenue", href: "/finance/revenue", icon: "revenue", ownerOnly: true },
+      { label: "Expenses", href: "/finance/expenses", icon: "expenses", ownerOnly: true },
+      { label: "Recurring", href: "/finance/recurring", icon: "recurring", ownerOnly: true },
+      { label: "Payments", href: "/finance/payments", icon: "payments", ownerOnly: true },
+      { label: "Reports", href: "/reports", icon: "reports", ownerOnly: true },
     ],
   },
   {
     title: "System",
     items: [
-      { label: "Settings", href: "/settings", ownerOnly: true },
-      { label: "Audit Log", href: "/audit", ownerOnly: true },
+      { label: "Settings", href: "/settings", icon: "settings", ownerOnly: true },
+      { label: "Audit Log", href: "/audit", icon: "audit", ownerOnly: true },
     ],
   },
 ];
@@ -98,11 +118,3 @@ export function getNavigationForRole(role: Role): NavSection[] {
     }))
     .filter((section) => section.items.length > 0);
 }
-
-/** HR also gets non-finance reports */
-export const hrReportHrefs = [
-  "/reports/employees",
-  "/reports/leave",
-  "/reports/recruitment",
-  "/reports/departments",
-];
